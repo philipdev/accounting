@@ -1,7 +1,7 @@
 # Accounting for small business
 
 ## Objectives
-* A spring boot and angular learing exercise for myself.
+* A spring boot and angular learning exercise for myself.
 * To use as an invoicing and accounting application 
 * Complying with Belgian tax and accounting rules.
 * To do double entry accounting

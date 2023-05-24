@@ -59,8 +59,6 @@ public class AccountEntry {
 	public String getDescription() {
 		return description;
 	}
-
-
 	
 	private AccountEntry() {
 		
