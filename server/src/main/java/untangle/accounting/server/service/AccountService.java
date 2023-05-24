@@ -47,7 +47,7 @@ public class AccountService {
 	}
 	
 	@Transactional
-	public AccountEntryData creatEntry(AccountEntryData transactionData) {
+	public AccountEntryData createEntry(AccountEntryData transactionData) {
 		Account account = accountRepository.findById(transactionData.accountId()).orElseThrow(()-> new NotFoundException("Account with id '%s' not found!".formatted(transactionData.accountId()))); // throw exception with response code
 		LocalDateTime executedAt = transactionData.executedAt().orElse(LocalDateTime.now());
 		String description = transactionData.description().orElse("");
