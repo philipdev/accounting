@@ -1,0 +1,63 @@
+<div class="form" [formGroup]="companyFormGroup" *ngIf="companyFormGroup">
+	<div class="form-row">  
+	  <mat-form-field appearance="outline">
+	   <label for="name"  i18n>Company name </label>
+		<input matInput id="name" type="text" formControlName="name">
+		<mat-error *ngIf="companyFormGroup.get('name')?.hasError('required')" i18n>Company name is required</mat-error>
+		<mat-error *ngIf="companyFormGroup.get('name')?.hasError('nameExists')" i18n>Company name already exists</mat-error>
+	  </mat-form-field>
+	  
+	  <mat-form-field  appearance="outline">
+		<label for="vat"  i18n>VAT-ID</label>
+		<input matInput id="vat" type="text" formControlName="vat">
+		<mat-error *ngIf="companyFormGroup.get('vat')?.hasError('required')" i18n>VAT-ID is required</mat-error>
+		<mat-error *ngIf="companyFormGroup.get('vat')?.hasError('vatExists')" i18n>VAT-ID already exists</mat-error>
+	  </mat-form-field>
+	</div>
+	<div class="form-row">
+	  <mat-form-field appearance="outline" >
+		<label for="address" i18n>Address</label>
+		<input matInput id="address" type="text" formControlName="address">
+		<mat-error *ngIf="companyFormGroup.get('address')?.hasError('required')" i18n>Address is required</mat-error>
+	  </mat-form-field>	
+	</div>
+	<div class="form-row">
+	  <mat-form-field appearance="outline" ngClass="zipCode">
+		<label for="zipCode" i18n>Zip code</label>
+		<input matInput id="zipCode" type="text" formControlName="zipCode">
+		<mat-error *ngIf="companyFormGroup.get('zip')?.hasError('required')" i18n>Zip code is required</mat-error>
+	  </mat-form-field>	
+	  
+	  <mat-form-field appearance="outline" ngClass="city">
+		<label for="city" i18n>City</label>
+		<input matInput id="city" type="text" formControlName="city">
+		<mat-error *ngIf="companyFormGroup.get('city')?.hasError('required')" i18n>City is required</mat-error>
+	  </mat-form-field>	
+	  
+	  <mat-form-field appearance="outline" >
+		<label for="country" i18n>Country</label>
+		<input matInput id="city" type="text" formControlName="country">
+		<mat-error *ngIf="companyFormGroup.get('country')?.hasError('required')" i18n>Country is required</mat-error>
+	  </mat-form-field>	
+	</div>
+
+	<div class="form-row">
+	  <mat-form-field appearance="outline" >
+		<label for="contact" i18n>Contact</label>
+		<input matInput id="contact" type="text" formControlName="contact">
+		<mat-error *ngIf="companyFormGroup.get('contact')?.hasError('required')" i18n>Contact is required</mat-error>
+	  </mat-form-field>	
+	  
+	  <mat-form-field appearance="outline" >
+		<label for="phoneNumber" i18n>Phone</label>
+		<input matInput id="city" type="text" formControlName="phoneNumber">
+		<mat-error *ngIf="companyFormGroup.get('phoneNumber')?.hasError('required')" i18n>Phone is required</mat-error>
+	  </mat-form-field>	
+	  
+	  <mat-form-field appearance="outline">
+		<label for="email" i18n>Email</label>
+		<input matInput id="email" type="text" formControlName="email">
+		<mat-error *ngIf="companyFormGroup.get('email')?.hasError('required')" i18n>Email is required</mat-error>
+	  </mat-form-field>	
+	</div>
+</div>

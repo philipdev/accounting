@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+		<h1>Untangle accounting </h1>
+		<ng-container *ngIf="hasOwner">
+			<div class="company-data" *ngIf="ownerCompany$ | async as owner"> 
+				<h3>{{ owner.name }}</h3>
+				<!--div>{{ owner.vat }}</div-->
+				<div>{{ owner.address }}</div>
+				<div> {{ owner.zipCode }} {{owner.city}}</div>
+			</div>
+		</ng-container>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="main-actions">
+    <div>
+      <a mat-button [routerLink]="'account/all'" routerLinkActive="active-link" i18n> Accounts </a>
+      <a mat-button [routerLink]="'company/list'" routerLinkActive="active-link"i18n> Companies </a>
+	  <a mat-button [routerLink]="'invoice/list'" routerLinkActive="active-link" i18n> Invoices</a>
+	  <a mat-button [routerLink]="'projects/all'" routerLinkActive="active-link" i18n> Projects </a>
+	  <a mat-button [routerLink]="'timesheet/all'" routerLinkActive="active-link" i18n> Timesheet </a>
+	  <a mat-button [routerLink]="'users/all'" routerLinkActive="active-link" i18n> Users </a>
+    </div>
+  </mat-toolbar-row>
+
+</mat-toolbar>
+<router-outlet></router-outlet>
+
+
+
+
+
+
+

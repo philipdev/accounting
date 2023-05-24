@@ -1,0 +1,45 @@
+<div class="main">
+
+	<div class="content" *ngIf="transactions$ | async as account">
+		<h3 i18n="accountdetails.account-header"> 
+			
+				{{account.account.accountName }}
+				( {account.account.accountType, select, 
+					EXPENSE {Expence account} 
+					LIABILITY {Liability account} 
+					INCOME {Income account}
+					EQUITY {Equity account}
+					ASSET {Asset account}
+				} :
+				{{account.account.accountNumber}} )
+		</h3>
+	
+		<table mat-table [dataSource]="account.transactions">
+			<ng-container matColumnDef="executedAt">
+			<mat-header-cell *matHeaderCellDef i18n="executedAt"> Execution date</mat-header-cell>
+			<mat-cell *matCellDef="let trx"> {{trx.executedAt | date}} </mat-cell>
+			<mat-footer-cell *matFooterCellDef></mat-footer-cell >
+			</ng-container>
+			<ng-container matColumnDef="debit">
+				<mat-header-cell *matHeaderCellDef i18n="debit"> Debit</mat-header-cell>
+				<mat-cell *matCellDef="let trx"> {{ trx.debit | currency:'EUR' }} </mat-cell>
+				<mat-footer-cell *matFooterCellDef> {{ account.debit | currency:'EUR' }}</mat-footer-cell>
+			</ng-container>
+			<ng-container matColumnDef="credit">
+				<mat-header-cell *matHeaderCellDef i18n="credit"> Credit</mat-header-cell>
+				<mat-cell *matCellDef="let trx"> {{ trx.credit | currency:'EUR'}} </mat-cell>
+				<mat-footer-cell *matFooterCellDef> {{ account.credit | currency:'EUR'}}</mat-footer-cell>
+			</ng-container>
+			<ng-container matColumnDef="description">
+				<mat-header-cell *matHeaderCellDef i18n="description"> Description</mat-header-cell>
+				<mat-cell *matCellDef="let trx">{{trx.description}}</mat-cell>
+				<mat-footer-cell *matFooterCellDef i18n="total">Total</mat-footer-cell >
+			</ng-container>
+		
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+			<mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+		</table>
+		
+	</div>
+</div>

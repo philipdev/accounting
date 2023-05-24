@@ -1,0 +1,30 @@
+<h3>Create an account</h3>
+<form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+  <div class="form-row smallfields">
+  <mat-form-field appearance="outline">
+	<label for="accountType" i18n="account-type">Account type </label>
+	<mat-select placeholder="Select account type" formControlName="accountType">
+	  <mat-option value="ASSET" i18n="account-type.ASSET">Assets account</mat-option>
+	  <mat-option value="EXPENSE" i18n="account-type.EXPENSE">Expence account</mat-option>
+	  <mat-option value="INCOME" i18n="account-type.INCOME">Income account</mat-option>
+	  <mat-option value="LIABILITY" i18n="account-type.LIABILITY">Liability account</mat-option>
+	  <mat-option value="EQUITY" i18n="account-type.EQUITY">Equity account</mat-option>
+	</mat-select>
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline">
+   <label for="accountNumber"  i18n="accountNumber">Account number </label>
+	<input matInput id="accountNumber" type="text" formControlName="accountNumber" required>
+  </mat-form-field>
+  
+
+  <mat-form-field  appearance="outline">
+	<label for="name" i18n="accountName">Account name </label>
+	<input matInput id="accountName" type="text" formControlName="accountName">
+  </mat-form-field>
+  </div>
+  <div class="button-row">
+	<button mat-raised-button  color="primary" type="submit" [disabled]="!accountForm.valid" i18n="createAccount">Create account</button>
+  </div>
+</form>
+	

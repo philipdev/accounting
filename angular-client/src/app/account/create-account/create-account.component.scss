@@ -1,0 +1,25 @@
+
+.form-row {
+	display:flex;
+	flex-direction:row;
+	align-items:stretch;
+	gap:1em;
+}
+
+.form-row * {
+	flex-grow:1;
+}
+
+.button-row {
+	display:flex;
+	flex-direction:row;
+	justify-content:flex-end;
+}
+
+button {
+	min-width: 10em;
+}
+
+.main .content {
+	padding:0px;
+}

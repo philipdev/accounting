@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Invoice</title>
+<style>
+@page {
+	size: portrait;
+	page-orientation: upright;
+	/* this affects the margin in the printer settings */
+	margin: 0mm 0mm 0mm 0mm;
+	
+	
+}
+
+@media screen {
+	html, body {
+		width: 60em;
+		margin: 0px;
+	}
+}
+
+body {
+	margin: 0px;
+	padding-top: 3em;
+	padding-left: 2em;
+	padding-right: 2em;
+	padding-bottom: 0em;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	font-family: Helvetica, Arial, Verdana;
+    font-size: 10pt;
+}
+
+div.head {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+div.head .company {
+    flex: 1 1 0;
+}
+
+div.head .company.to {
+    display:flex;
+    justify-content: center;
+}
+
+.company.to table {
+    min-width: 15em;
+}
+
+.to .vat, .from .vat {
+	margin-top: 1em;
+	font-weight: 600;
+}
+
+table .label {
+	min-width: 10em;
+	font-weight: 600;
+	vertical-align:top;
+}
+table .value {
+    min-width: 10em;
+    vertical-align:top;
+}
+
+.company-name {
+	font-size: 125%;
+}
+
+table.items {
+	margin-top: 5em;
+	border-collapse: collapse;
+	width: 100%;
+	margin-right: 2em;
+}
+
+table.items th, table tfoot td {
+	font-weight: 600;
+}
+
+table.items thead th {
+	border-bottom: solid 1px black;
+}
+
+table.items tfoot td {
+	text-align: right;
+}
+
+table.items .description {
+	text-align: left;
+	width: 25em;
+}
+
+table.items .count {
+	text-align: left;
+}
+
+table.items .unitPrice, table.items .excVat, table.items .vatRate, table.items .incVat
+	{
+	text-align: right;
+}
+
+table.items .unitPrice, table.items .unitPrice, table.items .excVat,
+	table.items .incVat {
+	width: 8em;
+}
+
+table.items .count {
+	width: 4em;
+}
+
+table.items .vatRate {
+	width: 4em;
+}
+
+table.items tfoot tr:nth-child(1) td {
+	padding-top: 1em;
+}
+
+table.items tbody tr:nth-child(1) td {
+	padding-top: 0.5em;
+}
+
+table.items tfoot td {
+	padding: 0.1em;
+}
+
+.conditions {
+	position: absolute;
+	bottom: 2em;
+	text-align: center;
+	left: 0;
+	right: 0;
+}
+</style>
+</head>
+<body>
+	<div class="head">
+		<div class="company from">
+			<table>
+				<tr>
+					<td colspan="2" class="company-name label" th:text="${invoice.invoiceFrom().get().name()}">Company name</td>
+				</tr>
+				<tr>
+				    <td class="label" th:text="#{address}">Address</td>
+					<td class="value"><span th:text="${invoice.invoiceFrom().get().address()}">Somestreet 0</span><br /> <span
+						th:text="${invoice.invoiceFrom().get().zipCode()}">0000</span> <span th:text="${invoice.invoiceFrom().get().city()}">Some place</span><br /> <span
+						th:text="${invoice.invoiceTo().country()}">Belgium</span></td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{contact}">Contact</td>
+					<td th:text="${invoice.invoiceFrom().get().contact()}">John Doe</td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{email}">Email</td>
+					<td th:text="${invoice.invoiceFrom().get().email()}">mail@example.com</td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{phoneNumber}">Phone</td>
+					<td th:text="${invoice.invoiceFrom().get().phoneNumber()}">0000 00 00 00</td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{iban}">IBAN</td>
+					<td class="accountNumber" th:text="${invoice.invoiceFrom().get().ownerData.get().iban()}">BE00 0000 0000 0000</td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{vatID}">VAT-ID</td>
+					<td class="vat" th:text="${invoice.invoiceFrom().get().vat()}">BE0000.000.000</td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{jurisdiction}">RPR</td>
+					<td class="court" th:text="${invoice.invoiceFrom().get().ownerData.get().jurisdiction()}">RPR COURT</td>
+				</tr>
+			</table>
+		</div>
+		<div class="company to">
+			<table>
+				<tr>
+					<td colspan="2" class="company-name label" th:text="${invoice.invoiceTo().name()}">Company name</td>
+				</tr>
+				<tr>
+				    <td class="label" th:text="#{address}">Address</td>
+					<td class="value"><span th:text="${invoice.invoiceTo().address()}">Some other street 99</span><br /> <span th:text="${invoice.invoiceTo().zipCode()}">0000</span>
+						<span th:text="${invoice.invoiceTo().city()}">Some city</span><br /> <span class="value" th:text="${invoice.invoiceTo().country()}">Country</span></td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{contact}">Contact</td>
+					<td class="value" th:text="${invoice.invoiceTo().contact()}">Jane Doe</td>
+				</tr>
+				<tr>
+					<td class="label" th:text="#{vatID}">VAT-ID</td>
+					<td class="vat value" th:text="${invoice.invoiceTo().vat()}">BE 0000.000.000</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<h1 th:text="#{invoice}">Invoice</h1>
+	<div class="customer">
+		
+		<table class="invoice">
+			<tr>
+				<td class="label" th:text="#{invoiceNumber}">Invoice number</td>
+				<td class="value" th:text="${invoice.invoiceNumber()}">1</td>
+			</tr>
+			<tr>
+				<td class="label" th:text="#{invoiceDate}">Invoice date</td>
+				<td class="value" th:text="${#temporals.format(invoice.invoiceDate(), 'dd/MM/yyyy')}">00/00/0000</td>
+				</div>
+			<tr>
+				<td class="label" th:text="#{expiryDate}">Expiry date</td>
+				<td class="value" th:text="${#temporals.format(invoice.expiryDate(), 'dd/MM/yyyy')}">00/00/0000</td>
+			</tr>
+			<tr>
+				<td class="label" th:text="#{reference}">Reference</td>
+				<td class="value" th:text="${invoice.reference()}">0000</td>
+			</tr>
+			<tr>
+			     <td class="label" th:text="#{description}">Description</td>
+			     <td class="value" th:text="${invoice.description()}"></td>
+			</tr>
+		</table>
+	</div>
+	<table class="items">
+		<thead>
+			<th class="description" th:text="#{itemDescription}">Description</th>
+			<th class="count" th:text="#{quantity}">Quantity</th>
+			<th class="unitPrice" th:text="#{unitPrice}">Unit price</th>
+			<th class="excVat" th:text="#{itemExVat}">Exc. VAT</th>
+			<th class="vatRate" th:text="#{vatRate}">VAT</th>
+			<th class="incVat" th:text="#{itemIncVat}">Inc. VAT</th>
+		</thead>
+		<tbody>
+			<tr th:each="item: ${invoice.items}">
+				<td class="description" th:text="${item.description()}"></td>
+				<td class="count" th:text="${#numbers.formatDecimal(item.count(), 1, 2, 'COMMA')}">0,00</td>
+				<td class="unitPrice">€ <span th:text="${#numbers.formatDecimal(item.unitPrice(), 1, 2, 'COMMA')}">0,00</span>
+				</td>
+				<td class="excVat">€ <span th:text="${#numbers.formatDecimal(item.amount(), 1, 2, 'COMMA')}">0,00</span>
+				</td>
+				<td class="vatRate" th:text="${#numbers.formatPercent(item.vatRate(), 1, 0)}">21%</td>
+				<td class="incVat">€ <span th:text="${#numbers.formatDecimal(item.amountPlusVAT(), 1, 2, 'COMMA')}">0,00</span>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5" th:text="#{totalExVat}">Total excluding VAT :</td>
+				<td>€ <span th:text="${#numbers.formatDecimal(invoice.amount(), 1, 2, 'COMMA')}">0,00</span>
+				</td>
+			</tr>
+			<tr th:each="rateOverAmount: ${invoice.rateOverAmount()}">
+				<td colspan="5"><span th:text="${#numbers.formatPercent(rateOverAmount.vatRate(), 1, 0)}">21%</span>
+				<span th:text="#{vatOver}">VAT over</span> 
+				€ <span th:text="${#numbers.formatDecimal(rateOverAmount.amount(), 1, 2, 'COMMA')}">0,00</span></td>
+				<td>€ <span th:text="${#numbers.formatDecimal(rateOverAmount.vatAmount(), 1, 2, 'COMMA')}">0,00</span></td>
+			</tr>
+			<tr>
+				<td colspan="5" th:text="#{totalIncludingVat}">Total including VAT :</td>
+				<td>€ <span th:text="${#numbers.formatDecimal(invoice.amountPlusVAT(), 1, 2, 'COMMA')}">0,00</span></td>
+			</tr>
+		</tfoot>
+	</table>
+	<div class="conditions" 
+		th:text="#{conditions(
+		    '€',
+		    ${#numbers.formatDecimal(invoice.amountPlusVAT(), 1, 2, 'COMMA')}, 
+			${invoice.invoiceFrom().get().ownerData.get().iban()},
+			${#temporals.format(invoice.expiryDate(), 'dd/MM/yyyy')},
+			${invoice.reference()}
+			)}">General conditions</div>
+</body>
+</html>

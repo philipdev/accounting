@@ -1,0 +1,17 @@
+.header {
+	display: flex;
+	align-items: center;
+	
+	.buttons {
+		margin-left:auto;
+		display:flex;
+		gap:1em;
+	}
+}
+.mat-column-select {
+	flex-grow: 0;
+	flex-shrink: 0;
+	min-width: 4em;
+	padding-left:0px;
+	padding-right:0px;
+}

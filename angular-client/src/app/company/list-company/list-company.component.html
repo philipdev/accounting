@@ -1,0 +1,52 @@
+<div class="main">
+
+	<div class="content">
+		<div class="header">
+			<h3>Companies</h3>
+			<div class="buttons">
+				<button mat-raised-button color="primary"  [routerLink]="'/company/create'" routerLinkActive="active-link" i18n> Add company </button>
+				<button mat-raised-button type='button' (click)="deleteSelected()"> <mat-icon aria-label="Delete line item">delete</mat-icon> Delete </button>
+				
+			</div>
+		</div>
+		
+		<table mat-table [dataSource]="companies$">
+			<ng-container matColumnDef="select">
+				<mat-header-cell *matHeaderCellDef i18n> <mat-checkbox [formControl]="all"></mat-checkbox></mat-header-cell>
+				<mat-cell *matCellDef="let data; let i = index"><mat-checkbox (click)="$event.stopPropagation()"[formControl]="getControl(i)"></mat-checkbox></mat-cell>
+			</ng-container>
+			
+			<ng-container matColumnDef="name">
+				<mat-header-cell *matHeaderCellDef i18n> Company name</mat-header-cell>
+				<mat-cell *matCellDef="let data" > 
+					{{ data.name }}
+				</mat-cell>
+			</ng-container>
+			
+			<ng-container matColumnDef="vat">
+				<mat-header-cell *matHeaderCellDef i18n> VAT Number</mat-header-cell>
+				<mat-cell *matCellDef="let data"> {{data.vat}} </mat-cell>
+			</ng-container>
+			
+			<ng-container matColumnDef="contact">
+				<mat-header-cell *matHeaderCellDef i18n> Contact</mat-header-cell>
+				<mat-cell *matCellDef="let data"> {{data.contact}} <br/>{{data.phoneNumber }} <br/> {{data.email}}</mat-cell>
+			</ng-container>
+			
+			<ng-container matColumnDef="address">
+				<mat-header-cell *matHeaderCellDef i18n> Address</mat-header-cell>
+				<mat-cell *matCellDef="let data"> {{data.address}}<br/>{{data.zipCode}} {{data.city}}<br/>{{data.country}}</mat-cell>
+			</ng-container>
+			
+			<ng-container matColumnDef="owner">
+				<mat-header-cell *matHeaderCellDef i18n> Owner</mat-header-cell>
+				<mat-cell *matCellDef="let data"> {{data.owner ? 'YES' : 'NO' }}</mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns" class="row-link" [routerLink]="'/company/update/' + row.id" [ngClass]="{owner:row.owner}"></mat-row>
+		</table>
+		
+	</div>
+</div>
+	

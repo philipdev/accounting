@@ -1,0 +1,20 @@
+.mat-column-debit, .mat-column-credit {
+	justify-content:right;
+	flex-grow:0.25;
+}
+.mat-column-executedAt {
+	flex-grow:0.50;
+}
+mat-footer-cell.mat-column-debit, mat-footer-cell.mat-column-credit, mat-footer-cell.mat-column-description {
+	font-weight:600;
+}
+mat-header-cell {
+font-weight:600;
+}
+mat-footer-row {
+	border-top: solid 1.5px black;
+}
+
+mat-footer-cell.mat-column-description {
+	justify-content:right;
+}

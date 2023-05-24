@@ -1,0 +1,102 @@
+form {
+	display:flex;
+	flex-direction:column;
+
+}
+
+.form-row {
+	display:flex;
+	justify-items:stretch;
+	gap:1em;
+}
+
+.button-row {
+	display:flex;
+	justify-content:flex-end;
+}
+
+.form-row {
+	mat-form-field {
+		flex: 1 1 0;
+	}
+	mat-form-field.description {
+		flex: 2 1 0;
+	}
+}
+
+
+button[mat-raised-button] {
+	min-width: 16em;
+}
+.summary {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+.total-row {
+	display: flex;
+	justify-content: center;
+	div {
+		font-weight: 500;
+		margin-top: 0.2em;
+		margin-bottom: 0.2em;
+	}
+	div.value {
+		text-align:right;
+		min-width: 8em;
+	}
+	div.label {
+		margin-right: 1em;
+		min-width: 10em;
+	}
+}
+
+table  {
+	width:100%;
+	input {
+	   font-family: Roboto, "Helvetica Neue", sans-serif;
+	   width: 100%;
+	   margin: 4px;
+	   border-color: lightgrey;
+	   border-style: solid;
+	   border-radius: 5px;
+	   padding: 6px;
+	   font-size: inherit;
+	   border-width: 1px;
+	   box-sizing: border-box;
+
+	}
+	input[type=number] {
+		text-align:right;
+	}
+	input:focus {
+		border-color: lightslategray;
+		outline: 0;
+	}
+
+
+	td.price, td.vat {
+		text-align:right;
+	}
+	.description {
+		min-width: 14em;
+	}
+	.reference {
+		min-width: 8em;
+	}
+	
+	.vatRate, .count, .unitPrice,  {
+		min-width: 4em;
+		max-width: 8em;
+		text-align:right;
+	}
+	.price, .vat {
+		min-width: 8em;
+		max-width: 10em;
+	}
+	thead {
+		td {
+			font-weight:500;
+	    }
+   }
+}
+

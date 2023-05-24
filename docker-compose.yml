@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres:
+    image: "postgres:15.2-alpine"
+    restart: always
+    container_name: accounting-database
+    hostname: accounting-database
+    environment:
+      POSTGRES_PASSWORD: uts
+      POSTGRES_USER: uts
+      POSTGRES_DB: uts
+    volumes:
+    - "D:/data/accounting:/var/lib/postgresql/data"
+    ports:
+      - "5433:5432"    
+  app:
+    build: .
+    container_name: accounting-app
+    hostname: accounting-app
+    environment:
+        DB_SCHEMA: public
+        DB_USER: uts
+        DB_PASS: uts
+        DB_URL: jdbc:postgresql://accounting-database:5432/uts
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8080"

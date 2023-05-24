@@ -1,0 +1,35 @@
+<div class="main">
+
+	<div class="content">
+		<div class="header">
+			<h3>Update company</h3>
+		</div>
+		<div>
+			<form #form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+			
+				<app-company-form [companyFormGroup]="companyForm"/>
+				<mat-checkbox id="owner" formControlName="owner">Owner company</mat-checkbox>
+				<div class="form-row smallfields" formGroupName="ownerData">
+				  <mat-form-field appearance="outline" >
+					<label for="iban" i18n>IBAN</label>
+					<input matInput id="iban" type="text" formControlName="iban">
+				  </mat-form-field>	
+				  
+				  <mat-form-field appearance="outline" >
+					<label for="bic" i18n>BIC</label>
+					<input matInput id="bic" type="text" formControlName="bic">
+				  </mat-form-field>	
+				  
+				  <mat-form-field appearance="outline" >
+					<label for="jurisdiction" i18n>Jurisdiction</label>
+					<input matInput id="jurisdiction" type="text" formControlName="jurisdiction" >
+				  </mat-form-field>	
+				</div>
+			
+				<div class="button-row">
+					<button mat-raised-button type="submit" [disabled]="!companyForm.valid" color="primary">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

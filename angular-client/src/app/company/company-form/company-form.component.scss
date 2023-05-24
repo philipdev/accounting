@@ -1,0 +1,27 @@
+.form {
+	display:flex;
+	flex-direction:column;
+	align-items:stretch;
+}
+
+.form-row mat-form-field {
+	flex-grow: 1;
+}
+
+.form-row .zipCode {
+	flex-grow: 0.2;
+	width:6em;
+}
+.form-row .city {
+	flex-grow: 1;
+}
+.form-row .country {
+	flex-grow: 1;
+}
+
+.form-row {
+	display:flex;
+	justify-content:stretch;
+	align-items:stretch;
+	gap: 1em;
+}

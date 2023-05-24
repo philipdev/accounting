@@ -1,0 +1,69 @@
+<div class="main">
+
+	<div class="content">
+		<div class="header">
+			<h3>Invoices</h3>
+			<button mat-raised-button color="primary" type='button' [disabled]="!hasOwner" [routerLink]="'/invoice/create'" routerLinkActive="active-link" i18n> Create invoice </button>
+		</div>
+		
+		<table mat-table [dataSource]="invoices$">
+			<ng-container matColumnDef="invoiceNumber">
+				<mat-header-cell *matHeaderCellDef i18n> No</mat-header-cell>
+				<mat-cell *matCellDef="let data" > 
+					{{ data.invoiceNumber }}
+				</mat-cell>
+			</ng-container>
+			<ng-container matColumnDef="invoiceDate">
+				<mat-header-cell *matHeaderCellDef > 
+					<span i18n>Invoice date</span> 
+					<span i18n>Expiry date</span> 
+				</mat-header-cell>
+				<mat-cell *matCellDef="let data"> 
+					<span> {{ data.invoiceDate | date }}  </span> 
+					<span> {{ invoiceService.getExpiryDate(data) | date }}  </span>
+				</mat-cell>
+			</ng-container>		
+			<ng-container matColumnDef="company">
+				<mat-header-cell *matHeaderCellDef i18n> <span>Company name</span><span>VAT number</span></mat-header-cell>
+				<mat-cell *matCellDef="let data" > 
+					<a [routerLink]="'/invoice/' + data.id">{{ data.invoiceTo.name }}</a>
+					<span>{{data.invoiceTo.vat}}</span>	
+				</mat-cell>
+			</ng-container>
+			
+
+			<ng-container matColumnDef="contact">
+				<mat-header-cell *matHeaderCellDef > 
+					<span i18n>Contact</span>
+					<span i18n>Phone</span>
+					<span i18n>Email</span>
+				</mat-header-cell>
+				<mat-cell *matCellDef="let data"> 
+					<span>{{data.invoiceTo.contact}}</span>
+					<span>{{data.invoiceTo.phoneNumber }} </span>
+					<span>{{data.invoiceTo.email}}</span>
+				</mat-cell>
+			</ng-container>
+			
+			<ng-container matColumnDef="amount">
+				<mat-header-cell *matHeaderCellDef i18n> Amount</mat-header-cell>
+				<mat-cell *matCellDef="let data"> {{ invoiceService.amountIncludingVAT(data) | currency:'EUR' }}</mat-cell>
+			</ng-container>
+			
+
+			
+
+			
+			<ng-container matColumnDef="pdf">
+				<mat-header-cell *matHeaderCellDef></mat-header-cell>
+				<mat-cell *matCellDef="let data">
+					<a mat-icon-button [href]="pdfLink(data.id)" target="_blank" (click)="$event.stopPropagation();"> <mat-icon aria-label="Invoice PDF">picture_as_pdf</mat-icon> </a>
+					<a mat-icon-button [href]="pdfLink(data.id)" target="_blank" download (click)="$event.stopPropagation();"> <mat-icon aria-label="Invoice PDF">save_alt</mat-icon> </a>
+				</mat-cell>
+			</ng-container>
+			
+			<mat-header-row *matHeaderRowDef="displayedColumns "></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="'/invoice/update/' + row.id"  class="row-link"></mat-row>
+		</table>
+	</div>
+</div>

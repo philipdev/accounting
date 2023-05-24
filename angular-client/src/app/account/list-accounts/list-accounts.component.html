@@ -1,0 +1,38 @@
+<div class="main">
+
+	<div class="content">
+
+	<app-create-account [embedded]="true" (accountAdded)="accountAdded($event);"/>
+  
+	<h3 class="accounts">Accounts</h3>
+		<table mat-table [dataSource]="accounts$">
+			<ng-container matColumnDef="accountType">
+			<mat-header-cell *matHeaderCellDef i18n="accountType"> Account type</mat-header-cell>
+			<mat-cell *matCellDef="let account" i18n="accountType.value"> 
+			 {account.accountType, select, 
+				EXPENSE {Expence account} 
+				LIABILITY {Liability account} 
+				INCOME {Income account}
+				EQUITY {Equity account}
+				ASSET {Asset account}
+			}
+			</mat-cell>
+
+			</ng-container>
+			<ng-container matColumnDef="accountName">
+				<mat-header-cell *matHeaderCellDef i18n="accountName"> Account name</mat-header-cell>
+				<mat-cell *matCellDef="let account"> {{account.accountName}} </mat-cell>
+
+			</ng-container>
+			<ng-container matColumnDef="accountNumber" >
+				<mat-header-cell *matHeaderCellDef i18n="accountNumber"> Account number</mat-header-cell>
+				<mat-cell *matCellDef="let account"> {{account.accountNumber}} </mat-cell>
+			</ng-container>
+
+			<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="'/account/' + row.id + '/transaction'" class="row-link"></mat-row>
+			
+				
+		</table>
+	</div>
+</div>

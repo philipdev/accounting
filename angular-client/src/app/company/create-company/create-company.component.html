@@ -1,0 +1,35 @@
+<div class="main">
+
+	<div class="content">
+		<h3>Add company</h3>
+		<form #form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+			
+			<app-company-form [companyFormGroup]="companyForm"/>
+			<mat-checkbox id="owner" formControlName="owner">Owner company</mat-checkbox>
+			<div class="form-row" formGroupName="ownerData">
+			  <mat-form-field appearance="outline" >
+				<label for="iban" i18n>IBAN</label>
+				<input matInput id="iban" type="text" formControlName="iban">
+				<mat-error *ngIf="companyForm.get('ownerData.iban')?.hasError('required')" i18n>IBAN is required</mat-error>
+			  </mat-form-field>	
+			  
+			  <mat-form-field appearance="outline" >
+				<label for="bic" i18n>BIC</label>
+				<input matInput id="bic" type="text" formControlName="bic">
+				<mat-error *ngIf="companyForm.get('ownerData.bic')?.hasError('required')" i18n>BIC is required</mat-error>
+			  </mat-form-field>	
+			  
+			  <mat-form-field appearance="outline" >
+				<label for="jurisdiction" i18n>Jurisdiction</label>
+				<input matInput id="jurisdiction" type="text" formControlName="jurisdiction" >
+				<mat-error *ngIf="companyForm.get('ownerData.jurisdiction')?.hasError('required')" i18n>Jurisdiction is required</mat-error>
+				
+			  </mat-form-field>	
+			</div>
+		
+			<div class="button-row">
+				<button mat-raised-button type="submit" [disabled]="!companyForm.valid" color="primary" i18n>Add company</button>
+			</div>
+		</form>
+	</div>
+</div>`

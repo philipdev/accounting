@@ -1,0 +1,15 @@
+.button-row {
+	display:flex;
+	justify-content:flex-end;
+}
+
+.form-row {
+	display:flex;
+	justify-content:stretch;
+	align-items:stretch;
+	gap: 1em;
+}
+
+.form-row mat-form-field {
+	flex-grow: 1;
+}

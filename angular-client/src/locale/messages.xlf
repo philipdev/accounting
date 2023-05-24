@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="4902817035128594900" datatype="html">
+        <source>Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-create-transaction/account-create-transaction.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="description">description</note>
+      </trans-unit>
+      <trans-unit id="6547597924550251642" datatype="html">
+        <source>Debit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-create-transaction/account-create-transaction.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="description">debit</note>
+      </trans-unit>
+      <trans-unit id="272934122656341350" datatype="html">
+        <source>Credit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-create-transaction/account-create-transaction.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="description">credit</note>
+      </trans-unit>
+      <trans-unit id="4335548177977692221" datatype="html">
+        <source>Book</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-create-transaction/account-create-transaction.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <note priority="1" from="description">book</note>
+      </trans-unit>
+      <trans-unit id="8094361755246838687" datatype="html">
+        <source> <x id="ICU" equiv-text="{account.account.accountType, select, 
+					EXPENSE {Expence account} 
+					LIBIABILITY {Libiability account} 
+					INCOME {Income account}
+					EQUITY {Equity account}
+					ASSET {Asset account}
+				}" xid="6488920861217876221"/> : <x id="INTERPOLATION" equiv-text="{{account.account.accountName }}"/> ( <x id="INTERPOLATION_1" equiv-text="{{account.account.accountNumber}}"/> ) </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-details/account-details.component.html</context>
+          <context context-type="linenumber">5,13</context>
+        </context-group>
+        <note priority="1" from="description">accountdetails.account-header</note>
+      </trans-unit>
+      <trans-unit id="6488920861217876221" datatype="html">
+        <source>{VAR_SELECT, select, EXPENSE {Expence account} LIBIABILITY {Libiability account} INCOME {Income account} EQUITY {Equity account} ASSET {Asset account}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-details/account-details.component.html</context>
+          <context context-type="linenumber">5,11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7924200261939594988" datatype="html">
+        <source> Execution date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-details/account-details.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="description">executedAt</note>
+      </trans-unit>
+      <trans-unit id="7140272328692884832" datatype="html">
+        <source> Debit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-details/account-details.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">debit</note>
+      </trans-unit>
+      <trans-unit id="4302775405964718460" datatype="html">
+        <source> Credit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-details/account-details.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">credit</note>
+      </trans-unit>
+      <trans-unit id="4556215123825736249" datatype="html">
+        <source> Description</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-details/account-details.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <note priority="1" from="description">description</note>
+      </trans-unit>
+      <trans-unit id="3448462145758383019" datatype="html">
+        <source>Total</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/account-details/account-details.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="description">total</note>
+      </trans-unit>
+      <trans-unit id="3928384631990649627" datatype="html">
+        <source>Account type </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="description">account-type</note>
+      </trans-unit>
+      <trans-unit id="5088662002733546221" datatype="html">
+        <source>Assets account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="description">account-type.ASSET</note>
+      </trans-unit>
+      <trans-unit id="6395773643302657169" datatype="html">
+        <source>Expence account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="description">account-type.EXPENSE</note>
+      </trans-unit>
+      <trans-unit id="1006948474916672911" datatype="html">
+        <source>Income account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">account-type.INCOME</note>
+      </trans-unit>
+      <trans-unit id="3808250946690507696" datatype="html">
+        <source>Liability account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">account-type.LIABILITY</note>
+      </trans-unit>
+      <trans-unit id="7178260696601303273" datatype="html">
+        <source>Equity account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <note priority="1" from="description">account-type.EQUITY</note>
+      </trans-unit>
+      <trans-unit id="4966063159768310577" datatype="html">
+        <source>Account number </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="description">accountNumber</note>
+      </trans-unit>
+      <trans-unit id="2474472382994174318" datatype="html">
+        <source>Account name </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">accountName</note>
+      </trans-unit>
+      <trans-unit id="5907476126990913307" datatype="html">
+        <source>Create account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/create-account/create-account.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">createAccount</note>
+      </trans-unit>
+      <trans-unit id="2507355870045417823" datatype="html">
+        <source> Account type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/list-accounts/list-accounts.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="description">accountType</note>
+      </trans-unit>
+      <trans-unit id="8856905278208146821" datatype="html">
+        <source> <x id="ICU" equiv-text="{account.accountType, select, 
+				EXPENSE {Expence account} 
+				LIABILITY {Liability account} 
+				INCOME {Income account}
+				EQUITY {Equity account}
+				ASSET {Asset account}
+			}" xid="3555036603647410927"/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/list-accounts/list-accounts.component.html</context>
+          <context context-type="linenumber">11,19</context>
+        </context-group>
+        <note priority="1" from="description">accountType.value</note>
+      </trans-unit>
+      <trans-unit id="3555036603647410927" datatype="html">
+        <source>{VAR_SELECT, select, EXPENSE {Expence account} LIABILITY {Liability account} INCOME {Income account} EQUITY {Equity account} ASSET {Asset account}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/list-accounts/list-accounts.component.html</context>
+          <context context-type="linenumber">12,18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="458955003884206639" datatype="html">
+        <source> Account name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/list-accounts/list-accounts.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="description">accountName</note>
+      </trans-unit>
+      <trans-unit id="1716095753137539639" datatype="html">
+        <source> Account number</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/account/list-accounts/list-accounts.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="description">accountNumber</note>
+      </trans-unit>
+      <trans-unit id="6574710269679413520" datatype="html">
+        <source> Accounts </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8377547098645693811" datatype="html">
+        <source> Companies </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="654695691505052226" datatype="html">
+        <source> Invoices</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7571931095853268764" datatype="html">
+        <source> Projects </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3031353059552452269" datatype="html">
+        <source> Timesheet </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4228319514212568219" datatype="html">
+        <source> Users </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/app.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

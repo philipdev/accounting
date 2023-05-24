@@ -1,0 +1,107 @@
+<div class="main">
+
+	<div class="content" *ngIf="invoice$ | async as invoice">
+		<div class="header">
+			<h3>Invoice</h3>
+		</div>
+		<div>
+		<div class="head">
+		
+		<div class="company to">
+			<table>
+				<tr>
+					<td class="label">Company name</td>
+					<td class="value">{{ invoice.invoiceTo.name}}</td>
+				</tr>
+				<tr>
+				    <td class="label">Address</td>
+					<td class="value">
+						<span>{{ invoice.invoiceTo.address }}</span><br /> 
+						<span>{{ invoice.invoiceTo.zipCode }}</span> <span>{{ invoice.invoiceTo.city }}</span><br /> 
+						<span>{{ invoice.invoiceTo.country }}</span>
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Contact</td>
+					<td class="value">{{ invoice.invoiceTo.contact }}</td>
+				</tr>
+				<tr>
+					<td class="label">Phone number</td>
+					<td class="value">{{ invoice.invoiceTo.phoneNumber }}</td>
+				</tr>
+				<tr>
+					<td class="label">Email</td>
+					<td class="value">{{ invoice.invoiceTo.email }}</td>
+				</tr>
+				<tr>
+					<td class="label">VAT-ID</td>
+					<td class="value">{{ invoice.invoiceTo.vat }}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+
+		
+		<table class="invoice">
+			<tr>
+				<td class="label" i18n>Invoice number</td>
+				<td class="value"> {{ invoice.invoiceNumber }}</td>
+			</tr>
+			<tr>
+				<td class="label" i18n>Invoice date</td>
+				<td class="value"> {{ invoice.invoiceDate | date }} </td>
+			<tr>
+				<td class="label" i18n>Expiry date</td>
+				<td class="value"> {{ invoiceService.getExpiryDate(invoice) | date }}</td>
+			</tr>
+			<tr>
+				<td class="label" i18n>Reference</td>
+				<td class="value">{{ invoice.reference }}</td>
+			</tr>
+			<tr>
+			     <td class="label" i18n>Description</td>
+			     <td class="value">{{ invoice.description }}</td>
+			</tr>
+		</table>
+
+	<table class="items">
+		<thead>
+			<th class="description">Description</th>
+			<th class="count">Quantity</th>
+			<th class="unitPrice">Unit price</th>
+			<th class="excVat">Exc. VAT</th>
+			<th class="vatRate">VAT</th>
+			<th class="incVat">Inc. VAT</th>
+		</thead>
+		<tbody>
+			<tr *ngFor="let item of invoice.items">
+				<td class="description">{{ item.description }}</td>
+				<td class="count" > {{ item.count }}</td>
+				<td class="unitPrice">€ <span>{{ item.unitPrice }}</span>
+				</td>
+				<td class="excVat">€ <span>{{ item.unitPrice * item.count }}</span>
+				</td>
+				<td class="vatRate">{{ item.vatRate }}</td>
+				<td class="incVat">€ <span>{{ item.unitPrice * item.count * (item.vatRate + 1) }}</span>
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5">Total excluding VAT :</td>
+				<td>€ <span>{{ invoiceService.amountExcludingVAT(invoice) }}</span></td>
+			</tr>
+			<tr>
+				<td colspan="5">Total  VAT :</td>
+				<td>€ <span>{{ invoiceService.amountVAT(invoice) }}</span></td>
+			</tr>
+			<tr>
+				<td colspan="5">Total including VAT :</td>
+				<td>€ <span>{{ invoiceService.amountIncludingVAT(invoice) }}</span></td>
+			</tr>
+		</tfoot>
+	</table>
+
+
+
+</div>

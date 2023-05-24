@@ -1,0 +1,32 @@
+.label {
+	min-width: 10em;
+	vertical-align:top;
+}
+
+.value {
+	vertical-align:top;
+}
+	
+table.items {
+	margin-top: 2em;
+	th, td {
+		min-width: 6em;
+		text-align:right;
+	}
+	th.description, td.description {
+		text-align:left;
+		min-width: 10em;
+	}
+	
+	tfoot {
+		td {
+			text-align:right;
+		}
+	}
+}
+
+.company table, table.invoice {
+	td, th {
+		padding: 5px;
+	}
+}
