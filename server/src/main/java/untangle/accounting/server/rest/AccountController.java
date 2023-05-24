@@ -31,7 +31,7 @@ public class AccountController {
 	
 	@PostMapping("/account/transaction")
 	public AccountEntryData createTransaction(@RequestBody AccountEntryData transactionData) {
-		return this.accountService.creatEntry(transactionData);
+		return this.accountService.createEntry(transactionData);
 	}
 	
 	@GetMapping("/account/{id}")
