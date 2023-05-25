@@ -63,7 +63,7 @@
 			</ng-container>
 			
 			<mat-header-row *matHeaderRowDef="displayedColumns "></mat-header-row>
-			<mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="'/invoice/update/' + row.id"  class="row-link"></mat-row>
+			<mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="'/invoice/' + row.id + '/detail'"  class="row-link"></mat-row>
 		</table>
 	</div>
 </div>
