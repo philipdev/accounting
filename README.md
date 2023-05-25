@@ -26,4 +26,4 @@ This project is still very much in an early stage.
 * Proper security and user management still needs to be implemented.
 * Many missing features.
 * Overal UI improvements needs to be made.
-
+* Basic formbased authentication, default username/password: uts/uts

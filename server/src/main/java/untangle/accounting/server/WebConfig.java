@@ -10,13 +10,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.WebProperties;
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestHandler;
@@ -27,6 +28,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
+@EnableWebSecurity
+
 public class WebConfig  {
 	Logger logger = LoggerFactory.getLogger(WebConfig.class);
 	
@@ -35,6 +38,13 @@ public class WebConfig  {
 	
 	@Value("${untangle.accounting.auth}")
 	private boolean authEnable;
+
+	@Value("${untangle.accounting.user.name}")
+	private String defaultUser;
+	
+	@Value("${untangle.accounting.user.password}")
+	private String defaultPassword;
+	
 	
 	@Autowired
 	WebProperties props;
@@ -86,6 +96,7 @@ public class WebConfig  {
             	XorCsrfTokenRequestAttributeHandler  delegate = new XorCsrfTokenRequestAttributeHandler ();
             	CsrfTokenRequestHandler handle = delegate::handle;
             	csrf.csrfTokenRequestHandler(handle);
+            	csrf.ignoringRequestMatchers("/login");
         	} else {
         		logger.info("CSRF DISABLED");
          		csrf.disable();
@@ -94,18 +105,28 @@ public class WebConfig  {
     	
         if(authEnable) {
         	logger.info("AUTH ENABLED");
-    	http.authorizeHttpRequests()
-    		.anyRequest()
-    		.authenticated()
-    		.and()
-    		.formLogin(withDefaults());
-        } else {
+	    	http.authorizeHttpRequests()
+	    		.anyRequest()
+	    		.authenticated()
+	    		.and()
+	    		.formLogin(withDefaults());
+	        } else {
         	logger.info("AUTH DISABLED");
         	http.authorizeHttpRequests().anyRequest().permitAll();
         }
 
     	return http.build();
     }
-
+	
+    @Bean
+    InMemoryUserDetailsManager users() {
+        return new InMemoryUserDetailsManager(
+                User.withUsername(defaultUser)
+                        .password(defaultPassword)
+                        .authorities("read")
+                        .build()
+        );
+    }
+    
     
 }
