@@ -99,7 +99,7 @@ public class CompanyServiceTest {
 				"0000", "Belgium", "Jane Do", "0495000000", "email@host", false, Optional.empty()
 		);
 		when(repo.save(any(Company.class))).thenAnswer(args -> { 
-				Company company = (Company) args.getArguments()[0]; 
+				Company company = (Company) args.getArgument(0);
 				company.setId(1L);
 				return company; 
 		});		

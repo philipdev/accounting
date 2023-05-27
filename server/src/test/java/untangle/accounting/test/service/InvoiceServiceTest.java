@@ -109,7 +109,7 @@ public class InvoiceServiceTest {
 		when(companyRespository.findByOwnerTrue()).thenReturn(Optional.of(ownerCompany));
 		when(templateEngine.process(anyString(), any(IContext.class))).thenReturn("<html>invoice data</html>");
 		when(invoiceRepository.save(any(Invoice.class))).thenAnswer(args -> { 
-			Invoice invoice = (Invoice) args.getArguments()[0]; 
+			Invoice invoice = (Invoice) args.getArgument(0);
 			ReflectionTestUtils.setField(invoice, "id", Long.valueOf(1));
 			return invoice; 
 		});		
