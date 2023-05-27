@@ -14,7 +14,6 @@ import java.util.stream.StreamSupport;
 
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.springframework.context.MessageSource;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -76,7 +75,6 @@ public class InvoiceService {
 		return new InvoiceData(Optional.ofNullable(invoice.getId()), to, Optional.ofNullable(from), invoice.getInvoiceDate(), invoice.getPaymentPeriod().getDays(), toInvoiceItems(invoice.getEntries()), invoice.getReferenceId(), invoice.getCustomerReferenceId(), Optional.of(invoice.getState()), invoice.getCurrency(), invoice.getInvoiceNumber());
 	}
 	
-	
 	@Transactional
 	public InvoiceData createInvoice(InvoiceData invoiceData) throws FailedToGeneratedReceipt {
 		Company owner = companyRepository.findByOwnerTrue().orElseThrow(()->new OwnerCompanyDoesNotExistException());
@@ -101,12 +99,8 @@ public class InvoiceService {
 	private void generateReceipt(Invoice invoice) throws FailedToGeneratedReceipt {	
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 			Context context = new Context(Locale.forLanguageTag(invoice.getLocale()));
-			
-	        context.setVariable("invoice", toInvoiceData(invoice));
-	        
-	        String html = templateEngine.process("view/invoice.html", context);
-	        
-	       
+	        context.setVariable("invoice", toInvoiceData(invoice));	        
+	        String html = templateEngine.process("view/invoice.html", context); 
 	        HtmlConverter.convertToPdf(html, out);
             
             invoice.setGeneratedInvoice(BlobProxy.generateProxy(out.toByteArray()));
@@ -125,8 +119,7 @@ public class InvoiceService {
 
 	public InvoiceData getInvoice(Long id) {
 		Optional<Invoice> invoice = invoiceRepository.findById(id);
-		InvoiceData invoiceData = invoice.map(InvoiceService::toInvoiceData).orElseThrow(() -> new NotFoundException("Invoice with id '%s' not found".formatted(id)));
-		return invoiceData;
+		return invoice.map(InvoiceService::toInvoiceData).orElseThrow(() -> new NotFoundException("Invoice with id '%s' not found".formatted(id)));
 	}
 	
 	@Transactional
@@ -140,7 +133,4 @@ public class InvoiceService {
 		byte[] data= html.getBytes(1L, (int) html.length());
 		return new InvoiceDownloadData(filename, new ByteArrayInputStream(data));
 	}
-	
-
-	
 }
