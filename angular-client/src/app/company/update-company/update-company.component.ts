@@ -21,7 +21,7 @@ export class UpdateCompanyComponent implements OnInit {
 	 
 	 companyForm = this.fb.group({
 		name: ['', Validators.required, this.companyService.nameValidator(this.id)],
-		vat: ['', Validators.required, , this.companyService.vatValidator(this.id)],
+		vat: ['', Validators.required, this.companyService.vatValidator(this.id)],
 		address: ['', Validators.required],
 		city: ['', Validators.required],
 		zipCode: ['', Validators.required],
