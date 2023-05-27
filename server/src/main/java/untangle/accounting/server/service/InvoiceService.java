@@ -13,10 +13,9 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 import org.hibernate.engine.jdbc.BlobProxy;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.spring6.ISpringTemplateEngine;
 
 import com.itextpdf.html2pdf.HtmlConverter;
 
@@ -39,10 +38,10 @@ public class InvoiceService {
 	
 	private InvoiceRepository invoiceRepository;
 	private CompanyRepository companyRepository;
-	private SpringTemplateEngine templateEngine;
+	private ISpringTemplateEngine templateEngine;
 	
 	public InvoiceService(InvoiceRepository invoiceRepository, CompanyRepository companyRepository,
-			SpringTemplateEngine templateEngine, MessageSource  messageSource) {
+			ISpringTemplateEngine templateEngine) {
 		super();
 		this.invoiceRepository = invoiceRepository;
 		this.companyRepository = companyRepository;

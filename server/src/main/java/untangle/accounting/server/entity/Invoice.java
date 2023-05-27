@@ -97,6 +97,7 @@ public class Invoice {
 		return id;
 	}
 	
+	
 	public Invoice() {
 		
 	}
