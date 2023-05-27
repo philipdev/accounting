@@ -95,4 +95,5 @@ public class CompanyControllerTest {
 		doNothing().when(service).validateName("name", null);
 		mockMvc.perform(get("/api/company/validate/name/name")).andExpect(status().isOk());	
 	}
+	
 }
