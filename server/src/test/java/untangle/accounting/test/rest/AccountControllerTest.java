@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,9 +65,19 @@ public class AccountControllerTest {
 	@Test
 	void testGetAccountDetails() throws Exception {
 		AccountData account = new AccountData(Optional.of(1L), AccountType.ASSET, "1", "1");
+		Double debit = 115.5d;
 		Double credit = 0d;
-		AccountEntryData[] entries = {};
-		Double debit = 0d;
+		AccountEntryData[] entries = {
+				new AccountEntryData(
+						Optional.of(1L), 
+						1L, 
+						Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)), 
+						115.5d, 
+						0.0d, 
+						Optional.of(""), 
+						Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)))
+		};
+		
 		when(service.getAccountDetails(1L)).thenReturn(new AccountDetails(account, entries, debit, credit));
 	
 		String expected = """
@@ -77,9 +88,19 @@ public class AccountControllerTest {
 				"accountName": "1",
 				"accountNumber": "1"
 			},
-			"debit":0,
+			"debit":115.5,
 			"credit":0,
-			"transactions":[]
+			"transactions":[
+				{
+					"id":1,
+					"accountId":1,
+					"executedAt": "2024-05-28T14:00:00",
+					"debit":115.5,
+					"credit":0,
+					"description":"",
+					"createdAt":"2024-05-28T14:00:00"
+				}
+			]
 			}
 		""";
 		
