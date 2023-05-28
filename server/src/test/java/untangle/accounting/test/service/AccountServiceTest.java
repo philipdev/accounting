@@ -39,7 +39,6 @@ public class AccountServiceTest {
 	@InjectMocks
 	AccountService service;
 	
-	
 	@Test
 	void testCreateAccount() {
 		AccountData accountData = new AccountData(Optional.empty(), AccountType.ASSET, "name", "number");
