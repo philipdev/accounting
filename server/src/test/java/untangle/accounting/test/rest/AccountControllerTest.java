@@ -40,7 +40,7 @@ public class AccountControllerTest {
 	void testCreateAccount() throws Exception {
 		String body = """
 			{
-				"accountType":"ASSET",
+				"accountType": "ASSET",
 				"accountName": "1",
 				"accountNumber": "1"
 			}
@@ -53,8 +53,8 @@ public class AccountControllerTest {
 		when(service.getAccount(1L)).thenReturn(new AccountData(Optional.of(1L), AccountType.ASSET, "1", "1"));
 		String expected = """
 				{
-					"id":1,
-					"accountType":"ASSET",
+					"id": 1,
+					"accountType": "ASSET",
 					"accountName": "1",
 					"accountNumber": "1"
 				}
@@ -69,13 +69,13 @@ public class AccountControllerTest {
 		Double credit = 0d;
 		AccountEntryData[] entries = {
 				new AccountEntryData(
-						Optional.of(1L), 
-						1L, 
-						Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)), 
-						115.5d, 
-						0.0d, 
-						Optional.of(""), 
-						Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)))
+					Optional.of(1L), 
+					1L, 
+					Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)), 
+					115.5d, 
+					0.0d, 
+					Optional.of(""), 
+					Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)))
 		};
 		
 		when(service.getAccountDetails(1L)).thenReturn(new AccountDetails(account, entries, debit, credit));
@@ -83,22 +83,22 @@ public class AccountControllerTest {
 		String expected = """
 			{
 			"account": {
-				"id":1,
-				"accountType":"ASSET",
+				"id": 1,
+				"accountType": "ASSET",
 				"accountName": "1",
 				"accountNumber": "1"
 			},
-			"debit":115.5,
-			"credit":0,
-			"transactions":[
+			"debit": 115.5,
+			"credit": 0,
+			"transactions": [
 				{
-					"id":1,
-					"accountId":1,
+					"id": 1,
+					"accountId": 1,
 					"executedAt": "2024-05-28T14:00:00",
-					"debit":115.5,
-					"credit":0,
-					"description":"",
-					"createdAt":"2024-05-28T14:00:00"
+					"debit": 115.5,
+					"credit": 0,
+					"description": "",
+					"createdAt": "2024-05-28T14:00:00"
 				}
 			]
 			}
@@ -127,7 +127,8 @@ public class AccountControllerTest {
 					"accountNumber": "2"
 				}
 				]
-			""";
+		""";
+		
 		mockMvc.perform(get("/api/account")).andExpect(content().json(expected));
 	}
 }
