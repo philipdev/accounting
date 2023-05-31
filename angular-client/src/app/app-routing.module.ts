@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CreateAccountComponent } from './account/create-account/create-account.component';
 import { ListAccountsComponent } from './account/list-accounts/list-accounts.component';
 import { AccountDetailsComponent } from './account/account-details/account-details.component';
 
@@ -19,7 +18,6 @@ const routes: Routes = [
 	{path: '',  redirectTo: '/account', pathMatch: 'full' },
 	{path:'account', component: ListAccountsComponent},
 	{path:'account/all', component: ListAccountsComponent},
-	{path:'account/create', component: CreateAccountComponent},
 	{path:'account/:id/transaction', component: AccountDetailsComponent},
 	{path:'company/create', component: CreateCompanyComponent},
 	{path:'company/list', component: ListCompanyComponent},

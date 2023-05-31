@@ -1,17 +1,43 @@
-
-
-.mat-column-accountName {
-	flex-grow:1;
-}
-.mat-column-accountNumber {
-	flex-grow:0.25;
+.wrapper {
+	display:flex;
 }
 
-.mat-column-accountType {
-	flex-grow: 0.25;
+.left {
+	flex-grow: 1;
+}
+
+.right {
+	flex-grow: 0;
+	
+}
+
+.account {
+	
+	font-weight: 900;
+	text-decoration:none;
+	.account {
+		font-weight: 700;
+		background: white;
+		.account {
+			font-weight: 500;
+		}
+	}
+	a {
+		padding: 2px;
+		text-decoration:none;
+		color:black;
+		display:flex;
+		justify-content:stretch;
+		.name {
+			width: 6em;
+			flex-grow:0;
+		}
+		.description {
+			width: 12em;
+			flex-grow: 1;
+			
+		}
+	}
 }
 
 
-h3.accounts {
-	margin-block-start: -1em;
-}

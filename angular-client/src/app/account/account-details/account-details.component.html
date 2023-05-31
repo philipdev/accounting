@@ -2,23 +2,19 @@
 
 	<div class="content" *ngIf="transactions$ | async as account">
 		<h3 i18n="accountdetails.account-header"> 
-			
-				{{account.account.accountName }}
-				( {account.account.accountType, select, 
-					EXPENSE {Expence account} 
-					LIABILITY {Liability account} 
-					INCOME {Income account}
-					EQUITY {Equity account}
-					ASSET {Asset account}
-				} :
-				{{account.account.accountNumber}} )
+				{{account.account }}
 		</h3>
 	
 		<table mat-table [dataSource]="account.transactions">
+			<ng-container matColumnDef="account">
+				<mat-header-cell *matHeaderCellDef i18n="executedAt"> Account</mat-header-cell>
+				<mat-cell *matCellDef="let trx"> {{trx.account}} </mat-cell>
+				<mat-footer-cell *matFooterCellDef></mat-footer-cell >
+			</ng-container>
 			<ng-container matColumnDef="executedAt">
-			<mat-header-cell *matHeaderCellDef i18n="executedAt"> Execution date</mat-header-cell>
-			<mat-cell *matCellDef="let trx"> {{trx.executedAt | date}} </mat-cell>
-			<mat-footer-cell *matFooterCellDef></mat-footer-cell >
+				<mat-header-cell *matHeaderCellDef i18n="executedAt"> Execution date</mat-header-cell>
+				<mat-cell *matCellDef="let trx"> {{trx.executedAt | date}} </mat-cell>
+				<mat-footer-cell *matFooterCellDef></mat-footer-cell >
 			</ng-container>
 			<ng-container matColumnDef="debit">
 				<mat-header-cell *matHeaderCellDef i18n="debit"> Debit</mat-header-cell>

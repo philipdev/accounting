@@ -1,0 +1,65 @@
+.grid {
+	display: grid;
+	grid-template-columns: 6em 6em 6em 1px 6em 6em 6em 48px ;
+	grid-template-rows: 1.5em;
+	grid-auto-rows: auto;
+	
+	input {
+	   font-family: Roboto, "Helvetica Neue", sans-serif;
+	   margin: 4px;
+	   border-color: lightgrey;
+	   border-style: solid;
+	   border-radius: 5px;
+	   padding: 6px;
+	   font-size: inherit;
+	   border-width: 1px;
+	   box-sizing: border-box;
+	}
+	input.ng-invalid.ng-dirty {
+		 border-color: red;
+	}
+	input[type=number] {
+		text-align:right;
+	}
+	input:focus {
+		border-color: lightslategray;
+		outline: 0;
+	}
+	.divider {
+		background:gray;
+	}
+
+	.divider.head {
+		background: unset;
+	}
+
+	div.head {
+		border-bottom: 1px solid gray;
+	}
+	div.head-button {
+		margin-top: -0.75em;
+	}
+}
+
+.button-row {
+	margin-top: 1em;
+	display:flex;
+	justify-content: flex-end;
+}
+
+
+.column {
+	display:flex;
+	flex-direction:column;
+	width:fit-content;
+}
+
+.row {
+	display:flex;
+	gap:1em;
+	justify-items: stretch;
+	.description {
+		flex-grow:1;
+	}
+}
+

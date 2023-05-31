@@ -1,80 +1,81 @@
 package untangle.accounting.server.service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.StreamSupport;
 
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import untangle.accounting.data.AccountData;
 import untangle.accounting.data.AccountDetails;
-import untangle.accounting.data.DebitCredit;
 import untangle.accounting.data.AccountEntryData;
-import untangle.accounting.server.entity.Account;
+import untangle.accounting.data.DebitCredit;
+import untangle.accounting.data.TransactionData;
 import untangle.accounting.server.entity.AccountEntry;
-import untangle.accounting.server.repository.AccountRepository;
 import untangle.accounting.server.repository.AccountEntryRepository;
 
 @Service
 public class AccountService {
 	
-	private AccountRepository accountRepository;
-	private AccountEntryRepository transactionRepository;
+	private Random random = new Random();
 	
-	public AccountService(AccountRepository repository, AccountEntryRepository transactionRepository) {
-		this.accountRepository = repository;
-		this.transactionRepository = transactionRepository;
+	
+	private AccountEntryRepository accountEntryRepository;
+	
+	public AccountService( AccountEntryRepository accountEntryRepository) {
+		this.accountEntryRepository = accountEntryRepository;
 	}
 	
-	@Transactional
-	public AccountData createAccount(AccountData data) {
-		Account account = new Account(data.accountType(),  data.accountNumber(), data.accountName());
+	public List<AccountData> getAccounts() {
+		Iterable<String> result = accountEntryRepository.findAllAccounts();
+		try(var s = StreamSupport.stream(result.spliterator(), false);) {
+			return s.map(AccountData::new).toList();
+		}
+	}
+	
+	public AccountDetails getAccountDetails(String account) {
+		Iterable<AccountEntry> result = accountEntryRepository.findAllByAccount(account);
+		DebitCredit dc = calculateDebitCredit(account, result);
 		
-		return toAccountData(accountRepository.save(account));
+		try(var s = StreamSupport.stream(result.spliterator(), false);) {
+			AccountEntryData[] trxList = s. map(AccountService::toTransactionData ).toArray((size)-> new AccountEntryData[size]);	
+			return new AccountDetails(account, trxList , dc.debit(), dc.credit());
+		}
 	}
 
-	public List<AccountData> getAccounts() {
-		try(var s = StreamSupport.stream(accountRepository.findAll().spliterator(), false)) {
-			return s.map(AccountService::toAccountData).sorted(AccountService::compareAccount).toList();
+	private DebitCredit calculateDebitCredit(String account, Iterable<AccountEntry> result) {
+		double totalDebit = 0;
+		double totalCredit = 0;
+		for (AccountEntry e: result) {
+			totalDebit += e.getDebit();
+			totalCredit += e.getCredit();
 		}
-	}
-	
-	private static int compareAccount(AccountData a, AccountData b) {
-		int value = a.accountType().compareTo(b.accountType());
-		return value == 0 ? a.accountNumber().compareTo(b.accountNumber()) : value;		
-	}
-	
-	@Transactional
-	public AccountEntryData createEntry(AccountEntryData transactionData) {
-		Account account = accountRepository.findById(transactionData.accountId()).orElseThrow(()-> new NotFoundException("Account with id '%s' not found!".formatted(transactionData.accountId()))); // throw exception with response code
-		LocalDateTime executedAt = transactionData.executedAt().orElse(LocalDateTime.now());
-		String description = transactionData.description().orElse("");
-		AccountEntry trx = new AccountEntry(account, executedAt, transactionData.debit(), transactionData.credit(), description);
-		return toTransactionData(transactionRepository.save(trx));
-	}
-	
-	public AccountDetails getAccountDetails(Long accountId) {
-		Account account = accountRepository.findById(accountId).orElseThrow(()-> new NotFoundException("Account with id '%s' not found!".formatted(accountId)));
-		DebitCredit dc = transactionRepository.calculateDebitCreditByAccount(account).orElse(new DebitCredit(account.getId(), 0d, 0d));
-		Iterable<AccountEntry> result = transactionRepository.findAllByAccount(account);
-		
-		try(var s = StreamSupport.stream(result.spliterator(), false)) {
-			AccountEntryData[] trxList = s.map(AccountService::toTransactionData ).toArray((size)-> new AccountEntryData[size]);	
-			return new AccountDetails(toAccountData(account),trxList , dc.debit(),dc.credit());
-		}
+		DebitCredit dc = new DebitCredit(account, totalDebit, totalCredit);
+		return dc;
 	}
 	
 	public static AccountEntryData toTransactionData(AccountEntry trx) {
-		return new AccountEntryData(Optional.of(trx.getId()), trx.getAccount().getId(), Optional.of(trx.getExecutedAt()), trx.getDebit(), trx.getCredit(), Optional.ofNullable(trx.getDescription()), Optional.ofNullable(trx.getCreatedAt()));
+		return new AccountEntryData(trx.getAccount(), Optional.of(trx.getExecutedAt()), trx.getDebit(), trx.getCredit(), Optional.ofNullable(trx.getDescription()), Optional.ofNullable(trx.getCreatedAt()));
 	}
 	
-	public AccountData getAccount(Long accountId) {
-		return accountRepository.findById(accountId).map(AccountService::toAccountData).get() ;
+	public static AccountData toAccountData(String account) {
+		return new AccountData(account);
 	}
 	
-	public static AccountData toAccountData(Account a) {
-		return new AccountData(Optional.of(a.getId()),a.getType(), a.getName(), a.getNumber());
+	@Transactional
+	public void createTransaction(TransactionData trxData) {
+		Long refId = random.nextLong();
+		
+		 Arrays.stream(trxData.entries())
+				.map(trxEntry -> new AccountEntry(trxEntry.account(), refId, trxData.executedAt(), trxEntry.debit(), trxEntry.credit(), trxData.description().orElse("")))
+				.forEach(entity -> accountEntryRepository.save(entity));
+		
 	}
+	
 }

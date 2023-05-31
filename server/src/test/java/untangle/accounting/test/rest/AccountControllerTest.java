@@ -1,5 +1,7 @@
 package untangle.accounting.test.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -7,21 +9,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 
 import untangle.accounting.data.AccountData;
 import untangle.accounting.data.AccountDetails;
 import untangle.accounting.data.AccountEntryData;
-import untangle.accounting.data.AccountType;
+import untangle.accounting.data.TransactionData;
+import untangle.accounting.data.TransactionEntryData;
 import untangle.accounting.server.rest.AccountController;
 import untangle.accounting.server.service.AccountService;
 
@@ -37,98 +42,82 @@ public class AccountControllerTest {
 	private MockMvc mockMvc;
 	
 	@Test
-	void testCreateAccount() throws Exception {
+	void testCreateTransactionEmpty() throws Exception {
 		String body = """
 			{
-				"accountType": "ASSET",
-				"accountName": "1",
-				"accountNumber": "1"
+				"executedAt":"2023-05-28T10:22:27.018Z",
+				"entries": [],
+				"description": ""	
 			}
 		""";
-		mockMvc.perform(post("/api/account").contentType("application/json").content(body)).andExpect(status().isOk());
+		mockMvc.perform(post("/api/account/transaction")
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().is4xxClientError());
 	}
 	
-	@Test 
-	void testGetAccount() throws Exception {
-		when(service.getAccount(1L)).thenReturn(new AccountData(Optional.of(1L), AccountType.ASSET, "1", "1"));
-		String expected = """
-				{
-					"id": 1,
-					"accountType": "ASSET",
-					"accountName": "1",
-					"accountNumber": "1"
-				}
-			""";
-		mockMvc.perform(get("/api/account/1")).andExpect(content().json(expected));
+	@Test
+	void testCreateTransactionBasic() throws Exception {
+		String body = """
+			{
+				"executedAt": "2023-05-28T10:22:27.018Z",
+				"entries": [
+					{
+							"account": "100", 
+							"debit": 100,
+							"credit": 0
+					},
+					{
+							"account": "200", 
+							"debit": 0,
+							"credit": 100
+					}
+				],
+				"description": ""	
+			}
+		""";
+		mockMvc.perform(post("/api/account/transaction")
+				.content(body)
+				.contentType(MediaType.APPLICATION_JSON))
+		.andExpect(status().isOk());
+		
+		ArgumentCaptor<TransactionData> enterData = ArgumentCaptor.forClass(TransactionData.class);
+		verify(service).createTransaction(enterData.capture());
+		LocalDateTime executedAt = LocalDateTime.of(2023, 5, 28, 10, 22, 27, (int) TimeUnit.NANOSECONDS.convert(18, TimeUnit.MILLISECONDS));
+		TransactionEntryData[] entries = {
+				new TransactionEntryData("100", 100d, 0d),
+				new TransactionEntryData("200", 0d, 100d),
+		};
+	
+		TransactionData actual = enterData.getValue();
+		assertThat(actual.executedAt()).isEqualTo(executedAt);
+		assertThat(actual.entries()).isEqualTo(entries);
+		assertThat(actual.description()).hasValue("");
 	}
 	
 	@Test
 	void testGetAccountDetails() throws Exception {
-		AccountData account = new AccountData(Optional.of(1L), AccountType.ASSET, "1", "1");
-		Double debit = 115.5d;
-		Double credit = 0d;
-		AccountEntryData[] entries = {
-				new AccountEntryData(
-					Optional.of(1L), 
-					1L, 
-					Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)), 
-					115.5d, 
-					0.0d, 
-					Optional.of(""), 
-					Optional.of(LocalDateTime.of(2024, 5, 28, 14, 00)))
-		};
-		
-		when(service.getAccountDetails(1L)).thenReturn(new AccountDetails(account, entries, debit, credit));
-	
 		String expected = """
 			{
-			"account": {
-				"id": 1,
-				"accountType": "ASSET",
-				"accountName": "1",
-				"accountNumber": "1"
-			},
-			"debit": 115.5,
-			"credit": 0,
-			"transactions": [
-				{
-					"id": 1,
-					"accountId": 1,
-					"executedAt": "2024-05-28T14:00:00",
-					"debit": 115.5,
-					"credit": 0,
-					"description": "",
-					"createdAt": "2024-05-28T14:00:00"
-				}
-			]
+				"account": "10",
+				"transactions":[{
+					"account":"10",
+					"executedAt":"2023-05-28T10:22:27.018",
+					"debit":100.0,
+					"credit":0.0,
+					"description":"zzz",
+					"createdAt":"2023-05-28T10:22:27.018"
+				}],
+				"debit":100.0,
+				"credit":0.0
 			}
 		""";
+		LocalDateTime executedAt = LocalDateTime.of(2023, 5, 28, 10, 22, 27, (int) TimeUnit.NANOSECONDS.convert(18, TimeUnit.MILLISECONDS));
 		
-		mockMvc.perform(get("/api/account/1/transaction")).andExpect(content().json(expected));
-	}
-	
-	@Test
-	void testGetAccounts() throws Exception {
-		when(service.getAccounts()).thenReturn(List.of(
-				new AccountData(Optional.of(1L), AccountType.ASSET, "1", "1"), 
-				new AccountData(Optional.of(2L), AccountType.ASSET, "2", "2")
-		));
-		String expected = """
-				[{
-					"id":1,
-					"accountType":"ASSET",
-					"accountName": "1",
-					"accountNumber": "1"
-				},
-				{
-					"id":2,
-					"accountType":"ASSET",
-					"accountName": "2",
-					"accountNumber": "2"
-				}
-				]
-		""";
+		AccountDetails details = new AccountDetails("10", new AccountEntryData[] {new AccountEntryData("10", Optional.of(executedAt), 100d, 0d, Optional.of("zzz"), Optional.of(executedAt))}, 100d, 0d);
+		when(service.getAccountDetails("10")).thenReturn(details);
 		
-		mockMvc.perform(get("/api/account")).andExpect(content().json(expected));
+		mockMvc.perform(get("/api/account/10")).andExpect(content().json(expected));
 	}
+
 }

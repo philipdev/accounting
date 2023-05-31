@@ -104,7 +104,6 @@ public class InvoiceService {
             
             invoice.setGeneratedInvoice(BlobProxy.generateProxy(out.toByteArray()));
 		} catch(Exception e) {
-			e.printStackTrace();
 			throw new FailedToGeneratedReceipt(e);
 		}
 	}
