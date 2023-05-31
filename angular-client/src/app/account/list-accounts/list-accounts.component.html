@@ -1,13 +1,9 @@
 <div class="main">
-	<div class="content">
-
-		
-		
-		<app-create-transaction/>
-		
-		<h3 class="accounts">Accounts</h3>
-		
-		
+	<div class="content">	
+		<div class="header">
+			<h3 class="accounts">Accounts</h3>
+			<button mat-raised-button color="primary" type='button' [routerLink]="'/account/transaction/create'" routerLinkActive="active-link" i18n> Add transaction </button>
+		</div>
 		<table mat-table [dataSource]="accounts$">
 			<ng-container matColumnDef="account">
 				<mat-header-cell *matHeaderCellDef i18n="executedAt"> Account</mat-header-cell>
@@ -20,7 +16,5 @@
 			<mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="'/account/' + row.accountName + '/transaction'"  class="row-link"></mat-row>
 			<mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
 		</table>
-		
-		
 	</div>
 </div>

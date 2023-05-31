@@ -92,3 +92,11 @@ mat-header-cell {
 h3 {
 	margin-block-end: 1em;
 }
+.header {
+	display: flex;
+	align-items: center;
+	
+	button {
+		margin-left:auto;
+	}
+}

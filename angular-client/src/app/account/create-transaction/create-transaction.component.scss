@@ -1,6 +1,6 @@
 .grid {
 	display: grid;
-	grid-template-columns: 6em 6em 6em 1px 6em 6em 6em 48px ;
+	grid-template-columns: 10em 8em 8em 1px 10em 8em 8em 48px ;
 	grid-template-rows: 1.5em;
 	grid-auto-rows: auto;
 	
@@ -18,9 +18,7 @@
 	input.ng-invalid.ng-dirty {
 		 border-color: red;
 	}
-	input[type=number] {
-		text-align:right;
-	}
+
 	input:focus {
 		border-color: lightslategray;
 		outline: 0;
@@ -39,6 +37,22 @@
 	div.head-button {
 		margin-top: -0.75em;
 	}
+	
+	div.head.debit {
+		padding-left: 0.5em;
+		
+	}
+	div.head.credit {
+		padding-right:0.5em;
+	}
+	
+	.debit {
+		text-align:left;
+	}
+	.credit {
+		text-align:right;
+	}
+	
 }
 
 .button-row {

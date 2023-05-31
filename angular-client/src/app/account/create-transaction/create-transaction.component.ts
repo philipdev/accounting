@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormBuilder, Validators, AsyncValidatorFn, FormGroup, FormArray, AbstractControl, ValidatorFn, ValidationErrors} from '@angular/forms';
 import { AccountService, AccountData, TransactionData} from '../account.service';
 
@@ -8,7 +9,8 @@ import { AccountService, AccountData, TransactionData} from '../account.service'
   styleUrls: ['./create-transaction.component.scss']
 })
 export class CreateTransactionComponent {
-
+	
+	router = inject(Router);
 	fb = inject(FormBuilder);	
 	accountService = inject(AccountService);
 	trxForm = this.fb.group({
@@ -52,7 +54,9 @@ export class CreateTransactionComponent {
 		
 	onSubmit() {
 		const data = this.trxForm.value as TransactionData;
-		this.accountService.create(data).subscribe(()=>{});
+		this.accountService.create(data).subscribe(()=>{
+			this.router.navigateByUrl('/account/list')
+		});
 	}
 
 }
