@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AccountService, AccountData} from '../account.service';
 import { FormBuilder, Validators, FormArray} from '@angular/forms';
 
@@ -9,22 +9,13 @@ import { FormBuilder, Validators, FormArray} from '@angular/forms';
 })
 export class ListAccountsComponent {
 	
-  displayedColumns = ['accountType', 'accountNumber','accountName'];
-  accounts$ = this.accountService.getAccounts();
-  
-  constructor(private accountService:AccountService) { 
-	accountService.fetch();
-  }
-  
-
-
-  public selectRow(row:AccountData):void {
-	  console.log(row);
-  }
-  
-  public accountAdded(account:AccountData) {
+	private accountService = inject(AccountService);
+	protected accounts$ = this.accountService.getList();
 	
-  }
-
+	displayedColumns = ['account'];
+	
+	constructor() {
+		this.accountService.fetch();
+	}
 }
 

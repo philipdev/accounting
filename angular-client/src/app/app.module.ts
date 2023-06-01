@@ -21,7 +21,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ListAccountsComponent } from './account/list-accounts/list-accounts.component';
-import { CreateAccountComponent } from './account/create-account/create-account.component';
 import { AccountDetailsComponent } from './account/account-details/account-details.component';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -38,6 +37,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { UpdateCompanyComponent } from './company/update-company/update-company.component';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoice-detail.component';
 import { ErrorComponent } from './error/error.component';
+import { CreateTransactionComponent } from './account/create-transaction/create-transaction.component';
 
 registerLocaleData(localeNL);
 
@@ -75,7 +75,6 @@ const initializerConfigFn = (appConfig: AppConfigService) => {
 @NgModule({
   declarations: [
     AppComponent,
-    CreateAccountComponent,
     ListAccountsComponent,
     AccountDetailsComponent,
     CreateCompanyComponent,
@@ -86,7 +85,8 @@ const initializerConfigFn = (appConfig: AppConfigService) => {
     NotFoundComponent,
     UpdateCompanyComponent,
     InvoiceDetailComponent,
-    ErrorComponent
+    ErrorComponent,
+    CreateTransactionComponent
   ],
   imports: [
     BrowserModule,

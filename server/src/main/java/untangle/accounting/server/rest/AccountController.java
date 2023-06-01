@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import untangle.accounting.data.AccountData;
 import untangle.accounting.data.AccountDetails;
-import untangle.accounting.data.AccountEntryData;
+import untangle.accounting.data.TransactionData;
 import untangle.accounting.server.service.AccountService;
 
 @RestController
@@ -24,28 +24,19 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 	
-	@PostMapping("/account")
-	public AccountData createAccount(@RequestBody AccountData accountData) {
-		return this.accountService.createAccount(accountData);
-	}
 	
-	@PostMapping("/account/transaction")
-	public AccountEntryData createTransaction(@RequestBody AccountEntryData transactionData) {
-		return this.accountService.createEntry(transactionData);
-	}
-	
-	@GetMapping("/account/{id}")
-	public AccountData getAccount(@PathVariable("id") Long accountId) {
-		return this.accountService.getAccount(accountId);
-	}
-	
-	@GetMapping("/account/{id}/transaction")
-	public AccountDetails getAccountDetails(@PathVariable("id") Long accountId) {
-		return this.accountService.getAccountDetails(accountId);
+	@GetMapping("/account/{name}")
+	public AccountDetails getAccountDetails(@PathVariable("name") String account) {
+		return this.accountService.getAccountDetails(account);
 	}
 
 	@GetMapping("/account")
 	public List<AccountData> getAccounts() {
 		return this.accountService.getAccounts();
+	}
+	
+	@PostMapping("/account/transaction")
+	public void createTransaction(@RequestBody TransactionData trxData) {
+		this.accountService.createTransaction(trxData);
 	}
 }

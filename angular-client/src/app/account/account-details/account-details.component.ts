@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AccountService, TransactionData, AccountData, AccountDetails} from '../account.service';
+import { AccountService, AccountEntryData, AccountData, AccountDetails} from '../account.service';
 import { ReplaySubject, Observable, map } from 'rxjs';
 
 @Component({
@@ -10,18 +10,18 @@ import { ReplaySubject, Observable, map } from 'rxjs';
 })
 export class AccountDetailsComponent {
 	
-	id:number;
+	id:string;
 	public readonly transactions$ = new ReplaySubject<AccountDetails>(1);
 	
-	displayedColumns = ['executedAt','description','debit', 'credit'];
+	displayedColumns = ['account', 'executedAt', 'description', 'debit', 'credit'];
 	
 	
 	constructor(private activatedroute:ActivatedRoute,private accountService:AccountService) {
-		this.id=parseInt(this.activatedroute.snapshot.params["id"]);
+		this.id=this.activatedroute.snapshot.params["id"];
 		this.fetchDetails();
 	}
 	
-	public transactionAdded(data:TransactionData) {
+	public transactionAdded(data:AccountEntryData) {
 		this.fetchDetails();
 	}
 	

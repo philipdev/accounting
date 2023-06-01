@@ -35,7 +35,6 @@ tasks.named('test') {
 sourceCompatibility = 17
 targetCompatibility = 17
 
-
-
-
-
+jar.doLast {	
+	project.file('build/application.txt').text = jar.archiveFileName.get()
+}

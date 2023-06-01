@@ -48,7 +48,6 @@ public class InvoiceControllerTest {
 		mock.perform(get("/api/invoice")).andExpect(content().json("[]"));
 	}
 	
-	
 	@Test
 	void testCreateInvoice() throws Exception {
 		String body = """
@@ -95,7 +94,6 @@ public class InvoiceControllerTest {
 					true, 
 					Optional.of(new OwnerCompanyData("","",""))
 			);
-			//  int daysDue, InvoiceItem[] items, String reference, String description, Optional<InvoiceState> state, String currency, Long invoiceNumber
 			return new InvoiceData(
 				Optional.of(1L),
 				input.invoiceTo(),

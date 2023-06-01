@@ -27,3 +27,20 @@ This project is still very much in an early stage.
 * Many missing features.
 * Overal UI improvements needs to be made.
 * Basic formbased authentication, default username/password: uts/uts
+
+
+## User story
+
+## Accounting
+
+### Invoice booking
+
+The invoice is posted:
+* Invoice amount including VAT debit account 400 (debtor account)
+* Invoice amount excluding VAT debit account 704 (profit)
+* VAT credit account 451 (owed to VAT)
+
+The invoice is paid:
+* Invoice amount inc VAT credit 400 (debtor account)
+* Invoice amount inc VAT debit 5500 (bank account), implicit
+

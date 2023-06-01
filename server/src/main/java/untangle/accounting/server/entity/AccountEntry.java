@@ -27,10 +27,24 @@ public class AccountEntry {
 	
 	private LocalDateTime executedAt;
 	
-	@OneToOne
-	private Account account;
+	private String account;
 	
 	private String description;
+	
+	private Long collerationId;
+	
+	private AccountEntry() {
+		
+	}
+	
+	public AccountEntry(String account, Long collerationId, LocalDateTime executedAt, Double debit, Double credit, String description) {
+		this.account = account;
+		this.collerationId = collerationId;
+		this.executedAt = executedAt;
+		this.debit = debit;
+		this.credit = credit;
+		this.description = description;
+	}
 	
 	public Long getId() {
 		return id;
@@ -52,24 +66,20 @@ public class AccountEntry {
 		return executedAt;
 	}
 
-	public Account getAccount() {
+	public String getAccount() {
 		return account;
 	}
 
 	public String getDescription() {
 		return description;
 	}
-	
-	private AccountEntry() {
-		
+
+	public Long getCollerationId() {
+		return collerationId;
 	}
-	
-	public AccountEntry(Account account, LocalDateTime executedAt, Double debit, Double credit, String description) {
-		this.account = account;
-		this.executedAt = executedAt;
-		this.debit = debit;
-		this.credit = credit;
-		this.description = description;
+
+	public void setCollerationId(Long collerationId) {
+		this.collerationId = collerationId;
 	}
 	
 
