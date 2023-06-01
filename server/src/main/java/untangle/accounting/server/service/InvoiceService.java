@@ -25,6 +25,8 @@ import untangle.accounting.data.InvoiceData;
 import untangle.accounting.data.InvoiceDownloadData;
 import untangle.accounting.data.InvoiceItem;
 import untangle.accounting.data.OwnerCompanyData;
+import untangle.accounting.data.TransactionData;
+import untangle.accounting.data.TransactionEntryData;
 import untangle.accounting.server.entity.Company;
 import untangle.accounting.server.entity.CompanyDetails;
 import untangle.accounting.server.entity.Invoice;
@@ -39,12 +41,14 @@ public class InvoiceService {
 	private InvoiceRepository invoiceRepository;
 	private CompanyRepository companyRepository;
 	private ISpringTemplateEngine templateEngine;
+	private AccountService accountService;
 	
 	public InvoiceService(InvoiceRepository invoiceRepository, CompanyRepository companyRepository,
-			ISpringTemplateEngine templateEngine) {
+						  AccountService accountService, ISpringTemplateEngine templateEngine) {
 		super();
 		this.invoiceRepository = invoiceRepository;
 		this.companyRepository = companyRepository;
+		this.accountService = accountService;
 		this.templateEngine = templateEngine;
 	}
 
@@ -92,6 +96,15 @@ public class InvoiceService {
 		
 		InvoiceData result= toInvoiceData(invoiceRepository.save(invoice));
 		
+		
+		TransactionEntryData[] accountEntries = { 
+				new TransactionEntryData("400", result.amountPlusVAT(), 0d),
+				new TransactionEntryData("704", result.amount(), 0d),
+				new TransactionEntryData("451", 0d, result.amountVAT())
+		};
+		
+		accountService.createTransaction(new TransactionData(result.invoiceDate(), accountEntries, Optional.of("Invoice " + result.invoiceNumber())));
+	
 		return result;
 	}
 
@@ -130,5 +143,12 @@ public class InvoiceService {
 		Blob html = invoice.getGeneratedInvoice();
 		byte[] data= html.getBytes(1L, (int) html.length());
 		return new InvoiceDownloadData(filename, new ByteArrayInputStream(data));
+	}
+	
+
+	private void bookPosted(InvoiceData invoice) {
+		
+
+	
 	}
 }

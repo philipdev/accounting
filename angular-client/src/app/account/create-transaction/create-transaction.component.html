@@ -20,19 +20,16 @@
 				<div class="grid">
 					<div class="head">Account</div>
 					<div class="head debit">Debit</div>
-					<div class="head credit">Credit</div>
 					<div class="head divider"></div>
-					<div class="head">Account</div>
-					<div class="head debit">Debit</div>
 					<div class="head credit">Credit</div>
 					<div class="head-button"><button mat-icon-button type='button' (click)="addRow()" i18n><mat-icon aria-label="Add line item">add</mat-icon></button></div>
 					<ng-container formArrayName="entries">
 						<ng-container class="entry" *ngFor="let entryForm of entryControls; let i = index" [formGroup]="entryForm">
 								<input matInput type="text" formControlName="account">
 								<input matInput type="number" class="debit" formControlName="debit">
+								<div class="divider"></div>
 								<input matInput type="number" class="credit" formControlName="credit">
-							<div *ngIf="i % 2 == 0" class="divider"></div>
-							<button  *ngIf="i % 2 == 1" (click)="removeRow(i-1)" mat-icon-button type='button'> <mat-icon aria-label="Delete line item">delete</mat-icon> </button>
+								<button  (click)="removeRow(i-1)" mat-icon-button type='button'> <mat-icon aria-label="Delete line item">delete</mat-icon> </button>
 						</ng-container>
 					</ng-container>
 				</div>

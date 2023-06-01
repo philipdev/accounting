@@ -4,13 +4,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -21,11 +24,14 @@ import org.thymeleaf.spring6.ISpringTemplateEngine;
 import untangle.accounting.data.CompanyData;
 import untangle.accounting.data.InvoiceData;
 import untangle.accounting.data.InvoiceItem;
+import untangle.accounting.data.TransactionData;
+import untangle.accounting.data.TransactionEntryData;
 import untangle.accounting.server.entity.Company;
 import untangle.accounting.server.entity.Invoice;
 import untangle.accounting.server.entity.InvoiceState;
 import untangle.accounting.server.repository.CompanyRepository;
 import untangle.accounting.server.repository.InvoiceRepository;
+import untangle.accounting.server.service.AccountService;
 import untangle.accounting.server.service.FailedToGeneratedReceipt;
 import untangle.accounting.server.service.InvoiceService;
 import untangle.accounting.server.service.OwnerCompanyDoesNotExistException;
@@ -41,6 +47,9 @@ public class InvoiceServiceTest {
 	
 	@Mock
 	CompanyRepository companyRespository;
+	
+	@Mock
+	AccountService accountService;
 	
 	@InjectMocks
 	InvoiceService service;
@@ -80,7 +89,9 @@ public class InvoiceServiceTest {
 	void testCreateInvoiceOk() throws FailedToGeneratedReceipt {
 		LocalDateTime invoiceDate = LocalDateTime.of(2023, 1, 1, 0, 0);
 		int daysDue = 30;
-		InvoiceItem[] items = new InvoiceItem[0];
+		InvoiceItem[] items = { 
+				new InvoiceItem("desc", "ref", 0.21, 1, 1000)
+		};
 		String reference = "ref";
 		String description = "desc";
 		String currency = "EUR";
@@ -112,12 +123,24 @@ public class InvoiceServiceTest {
 			Invoice invoice = (Invoice) args.getArgument(0);
 			ReflectionTestUtils.setField(invoice, "id", Long.valueOf(1));
 			return invoice; 
-		});		
+		});
 		when(invoiceRepository.getNextInvoiceNumber()).thenReturn(Optional.of(3L));
 		
 		InvoiceData created = service.createInvoice(invoiceData);
-		
+				
 		assertThat(created.state()).hasValue(InvoiceState.POSTED);
 		assertThat(created.invoiceNumber()).isEqualTo(3L);
+		assertThat(created.amountPlusVAT()).isEqualTo(1210d);
+		
+		ArgumentCaptor<TransactionData> trxCapture = ArgumentCaptor.forClass(TransactionData.class);
+		verify(accountService).createTransaction(trxCapture.capture());
+		TransactionEntryData[] journalEntries = { 
+				new TransactionEntryData("400", 1210d, 0d), // debtor account
+				new TransactionEntryData("704", 1000d, 0d), // profit
+				new TransactionEntryData("451", 0d, 210d)   // owed VAT
+		};
+		
+		assertThat(trxCapture.getValue().entries()).hasSameElementsAs(List.of(journalEntries));
+		
 	}
 }

@@ -28,23 +28,15 @@ export class CreateTransactionComponent {
 	}
 	
 	public addRow() {
-		console.log('addItem');
-		const left = this.fb.group({
+		const entry = this.fb.group({
 			account: ['',  Validators.required],
 			debit: [null as null|number, Validators.required],
 			credit: [null as null|number, Validators.required]
 		});
-		const right = this.fb.group({
-			account: ['',  Validators.required],
-			debit: [null as null|number, Validators.required],
-			credit: [null as null|number, Validators.required]
-		});
-		this.entries.push(left);
-		this.entries.push(right);
+		this.entries.push(entry);
 	}
 	
 	public removeRow(i:number) {
-		this.entries.removeAt(i);
 		this.entries.removeAt(i);
 	}
 	
