@@ -69,7 +69,7 @@ public class AccountService {
 	}
 	
 	@Transactional
-	public void createTransaction(TransactionData trxData) {
+	public void addTransaction(TransactionData trxData) {
 		Long refId = random.nextLong();
 		
 		 Arrays.stream(trxData.entries())

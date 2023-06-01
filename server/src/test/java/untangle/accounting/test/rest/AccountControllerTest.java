@@ -82,7 +82,7 @@ public class AccountControllerTest {
 		.andExpect(status().isOk());
 		
 		ArgumentCaptor<TransactionData> enterData = ArgumentCaptor.forClass(TransactionData.class);
-		verify(service).createTransaction(enterData.capture());
+		verify(service).addTransaction(enterData.capture());
 		LocalDateTime executedAt = LocalDateTime.of(2023, 5, 28, 10, 22, 27, (int) TimeUnit.NANOSECONDS.convert(18, TimeUnit.MILLISECONDS));
 		TransactionEntryData[] entries = {
 				new TransactionEntryData("100", 100d, 0d),

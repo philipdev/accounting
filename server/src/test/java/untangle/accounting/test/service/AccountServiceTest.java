@@ -1,9 +1,6 @@
 package untangle.accounting.test.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,9 +18,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import untangle.accounting.data.AccountData;
 import untangle.accounting.data.AccountDetails;
-import untangle.accounting.data.DebitCredit;
 import untangle.accounting.data.TransactionData;
 import untangle.accounting.data.TransactionEntryData;
 import untangle.accounting.server.entity.AccountEntry;
@@ -67,7 +62,7 @@ public class AccountServiceTest {
 				new TransactionEntryData("101", 0d, 100d),
 		};
 		TransactionData trx = new TransactionData(executedAt, entries, Optional.of("transfer"));
-		service.createTransaction(trx);
+		service.addTransaction(trx);
 		ArgumentCaptor<AccountEntry> args = ArgumentCaptor.forClass(AccountEntry.class);
 		verify(accountEntryRepository, times(2)).save(args.capture());
 		List<AccountEntry> actualEntries = args.getAllValues();

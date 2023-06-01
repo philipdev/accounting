@@ -103,7 +103,7 @@ public class InvoiceService {
 				new TransactionEntryData("451", 0d, result.amountVAT())
 		};
 		
-		accountService.createTransaction(new TransactionData(result.invoiceDate(), accountEntries, Optional.of("Invoice " + result.invoiceNumber())));
+		accountService.addTransaction(new TransactionData(result.invoiceDate(), accountEntries, Optional.of("Invoice " + result.invoiceNumber())));
 	
 		return result;
 	}
@@ -145,10 +145,4 @@ public class InvoiceService {
 		return new InvoiceDownloadData(filename, new ByteArrayInputStream(data));
 	}
 	
-
-	private void bookPosted(InvoiceData invoice) {
-		
-
-	
-	}
 }

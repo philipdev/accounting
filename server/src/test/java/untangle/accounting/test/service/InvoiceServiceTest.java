@@ -133,7 +133,7 @@ public class InvoiceServiceTest {
 		assertThat(created.amountPlusVAT()).isEqualTo(1210d);
 		
 		ArgumentCaptor<TransactionData> trxCapture = ArgumentCaptor.forClass(TransactionData.class);
-		verify(accountService).createTransaction(trxCapture.capture());
+		verify(accountService).addTransaction(trxCapture.capture());
 		TransactionEntryData[] journalEntries = { 
 				new TransactionEntryData("400", 1210d, 0d), // debtor account
 				new TransactionEntryData("704", 1000d, 0d), // profit
