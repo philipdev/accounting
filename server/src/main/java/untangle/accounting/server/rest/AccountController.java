@@ -37,6 +37,6 @@ public class AccountController {
 	
 	@PostMapping("/account/transaction")
 	public void createTransaction(@RequestBody TransactionData trxData) {
-		this.accountService.createTransaction(trxData);
+		this.accountService.addTransaction(trxData);
 	}
 }

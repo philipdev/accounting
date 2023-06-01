@@ -104,7 +104,6 @@ public class CompanyServiceTest {
 				return company; 
 		});		
 		
-		assertThat(service.createCompany(companyData)).hasFieldOrPropertyWithValue("name", "Company name");
-		
+		assertThat(service.createCompany(companyData)).hasFieldOrPropertyWithValue("name", "Company name");	
 	}
 }

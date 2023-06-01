@@ -9,5 +9,9 @@ public record TransactionData(LocalDateTime executedAt, TransactionEntryData[] e
 		Objects.requireNonNull(executedAt);
 		Objects.requireNonNull(entries);
 		Objects.requireNonNull(description);
+		
+		if(entries.length == 0) {
+			throw new IllegalArgumentException("one or more transaction entries required");
+		}
 	}
 }
