@@ -8,7 +8,7 @@
 * Automate the accounting process
 
 
-## Build and run without local development enviroment
+## Build and run without local development environment
 To build and run the application and a postgress database inside docker containers:
 
     docker compose -f docker-compose.yml build
