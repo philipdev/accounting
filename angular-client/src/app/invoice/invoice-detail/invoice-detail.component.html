@@ -17,7 +17,7 @@
 				    <td class="label">Address</td>
 					<td class="value">
 						<span>{{ invoice.invoiceTo.address }}</span><br /> 
-						<span>{{ invoice.invoiceTo.zipCode }}</span> <span>{{ invoice.invoiceTo.city }}</span><br /> 
+						<span>{{ invoice.invoiceTo.zipCode }}</span>&nbsp;<span>{{ invoice.invoiceTo.city }}</span><br /> 
 						<span>{{ invoice.invoiceTo.country }}</span>
 					</td>
 				</tr>
@@ -49,10 +49,10 @@
 			</tr>
 			<tr>
 				<td class="label" i18n>Invoice date</td>
-				<td class="value"> {{ invoice.invoiceDate | date }} </td>
+				<td class="value"> {{ invoice.invoiceDate | date :'short'}} </td>
 			<tr>
 				<td class="label" i18n>Expiry date</td>
-				<td class="value"> {{ invoiceService.getExpiryDate(invoice) | date }}</td>
+				<td class="value"> {{ invoiceService.getExpiryDate(invoice) | date:'short' }}</td>
 			</tr>
 			<tr>
 				<td class="label" i18n>Reference</td>

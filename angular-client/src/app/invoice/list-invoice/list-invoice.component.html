@@ -19,8 +19,8 @@
 					<span i18n>Expiry date</span> 
 				</mat-header-cell>
 				<mat-cell *matCellDef="let data"> 
-					<span> {{ data.invoiceDate | date }}  </span> 
-					<span> {{ invoiceService.getExpiryDate(data) | date }}  </span>
+					<span> {{ data.invoiceDate | date:'short' }}  </span> 
+					<span> {{ invoiceService.getExpiryDate(data) | date:'short' }}  </span>
 				</mat-cell>
 			</ng-container>		
 			<ng-container matColumnDef="company">

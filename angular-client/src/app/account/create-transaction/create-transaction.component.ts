@@ -30,8 +30,8 @@ export class CreateTransactionComponent {
 	public addRow() {
 		const entry = this.fb.group({
 			account: ['',  Validators.required],
-			debit: [null as null|number, Validators.required],
-			credit: [null as null|number, Validators.required]
+			debit: [null as null|number, [Validators.required, Validators.min(0)]],
+			credit: [null as null|number, [Validators.required, Validators.min(0)]]
 		});
 		this.entries.push(entry);
 	}

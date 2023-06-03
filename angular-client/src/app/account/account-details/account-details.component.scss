@@ -3,8 +3,15 @@
 	flex-grow:0.25;
 }
 .mat-column-executedAt {
-	flex-grow:0.50;
+	flex-grow:0;
+	min-width: 10em;
 }
+
+.mat-column-account {
+	flex-grow:0;
+	min-width:6em;
+}
+
 mat-footer-cell.mat-column-debit, mat-footer-cell.mat-column-credit, mat-footer-cell.mat-column-description {
 	font-weight:600;
 }
@@ -18,3 +25,4 @@ mat-footer-row {
 mat-footer-cell.mat-column-description {
 	justify-content:right;
 }
+

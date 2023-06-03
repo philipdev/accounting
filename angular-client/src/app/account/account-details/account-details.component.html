@@ -7,13 +7,13 @@
 	
 		<table mat-table [dataSource]="account.transactions">
 			<ng-container matColumnDef="account">
-				<mat-header-cell *matHeaderCellDef i18n="executedAt"> Account</mat-header-cell>
+				<mat-header-cell *matHeaderCellDef i18n="account"> Account</mat-header-cell>
 				<mat-cell *matCellDef="let trx"> {{trx.account}} </mat-cell>
 				<mat-footer-cell *matFooterCellDef></mat-footer-cell >
 			</ng-container>
 			<ng-container matColumnDef="executedAt">
 				<mat-header-cell *matHeaderCellDef i18n="executedAt"> Execution date</mat-header-cell>
-				<mat-cell *matCellDef="let trx"> {{trx.executedAt | date}} </mat-cell>
+				<mat-cell *matCellDef="let trx"> {{trx.executedAt | date:'short'}} </mat-cell>
 				<mat-footer-cell *matFooterCellDef></mat-footer-cell >
 			</ng-container>
 			<ng-container matColumnDef="debit">

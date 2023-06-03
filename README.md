@@ -19,14 +19,14 @@ The application can now be accessed on http://localhost:8000
 ## Status
 This project is still very much in an early stage.
 
-* Accounting is not actively used yet and needs to be refactored using the MAR structure (https://www.cbn-cnc.be/nl/node/2250). 
+* Accounting is not actively used yet and needs to be re-factored using the MAR structure (https://www.cbn-cnc.be/nl/node/2250). 
 * Create and update companies is implemented, company is an abstraction for suppliers, customers and owner company but some extra improvements are still required.
 * Invoice creation (an owner company must have been created before), the invoice is intentionally generated only once however the process still needs to be separated in discrete steps, the generated invoice itself is currently only in Dutch.
 * CORS and CSRF (reason why both angular and spring are bundled in the same container)
 * Proper security and user management still needs to be implemented.
 * Many missing features.
-* Overal UI improvements needs to be made.
-* Basic formbased authentication, default username/password: uts/uts
+* Overall UI improvements needs to be made.
+* Basic form-based authentication, default user name/password: uts/uts
 
 
 ## User story
